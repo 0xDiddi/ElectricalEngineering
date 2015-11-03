@@ -1,0 +1,31 @@
+itemGroup.electricalengineering_general=Electrical Engineering
+itemGroup.electricalengineering_weapons=Energy Weapons
+
+item.electricalengineering_WireCopper.name=Copper Wire
+item.electricalengineering_TubeIron.name=Iron Tube
+item.electricalengineering_Coil.name=Hollow Copper Coil
+item.electricalengineering_PcbLVBurnt.name=Burnt Low Voltage PCB
+item.electricalengineering_PcbHVBurnt.name=Burnt High Voltage PCB
+item.electricalengineering_PcbScrapLV.name=PCB Scrap (LV)
+item.electricalengineering_PcbScrapHV.name=PCB SCrap (HV)
+item.electricalengineering_HardPaperRaw.name=Raw Paper-base plastics
+item.electricalengineering_HardPaper.name=Paper-base plastics
+item.electricalengineering_BucketAcid.name=Bucket of Etching Acid
+item.electricalengineering_PcbUnetched.name=Unetched PCB
+item.electricalengineering_PcbEtched.name=Etched PCB
+item.electricalengineering_PcbControl.name=Control circuit
+item.electricalengineering_PcbVoltReg.name=Voltage Regulation Circuit
+
+item.electricalengineering_CapacitorLV.name=Capacitor
+item.electricalengineering_CapacitorHV.name=High Voltage Capacitor
+item.electricalengineering_Transistor.name=Transistor
+item.electricalengineering_Resistor.name=Resistor
+item.electricalengineering_Transformer.name=Transformer
+
+item.electricalengineering_GaussGun.name=Gauss Gun
+
+tile.electricalengineering_MachineSolder.name=Soldering Machine
+tile.electricalengineering_MachineMAD.name=MAD (Mechanical Arm Device)
+tile.electricalengineering_MachineWinder.name=Coil Winder
+
+tile.electricalengineering_MachineBurnt.name=Burnt Machine

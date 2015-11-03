@@ -1,5 +1,3 @@
-include "GaussGunMod"
-
 buildscript {
     repositories {
         mavenCentral()
@@ -19,9 +17,9 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.9"
-group= "gmail.theultimatehose.gg" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "GaussGun"
+version = "0.5"
+group= "gmail.theultimatehose.ee" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "ElectricalEngineering"
 
 minecraft {
     version = "1.7.10-10.13.4.1492-1.7.10"
