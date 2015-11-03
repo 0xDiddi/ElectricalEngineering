@@ -1,0 +1,10 @@
+<<<<<<< HEAD
+/.gradle
+*/.gradle
+/build
+*/build
+/*mc
+/*out
+*.iml
+*.ipr
+*.iws

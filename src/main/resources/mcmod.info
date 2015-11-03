@@ -1,0 +1,15 @@
+[
+{
+  "modid": "ElectricalEngineering",
+  "name": "Electrical Engineering",
+  "description": "This is a debug",
+  "version": "1.7.10-0.5",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["TheUltimateHose"],
+  "credits": "Most: Me, Packet syncer, Config: Ellpeck, Copper texture on the gun: Team COFH",
+  "logoFile": "",
+  "screenshots": []
+}
+]

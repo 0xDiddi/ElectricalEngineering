@@ -1,0 +1,15 @@
+[
+{
+  "modid": "GaussGun",
+  "name": "The Gauss Gun Mod",
+  "description": "A mod that adds a Gauss gun to your Minecraft. I recommend having something like Thermal Foundation installed because you will need a RF-source, copper ingots and tin nuggets",
+  "version": "1.7.10-0.9",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/TheUltimateHose/GaussGunMod/",
+  "updateUrl": "",
+  "authorList": ["TheUltimateHose"],
+  "credits": "Most: Me, Packet syncer, Config: Ellpeck, Copper texture on the gun: Team COFH",
+  "logoFile": "",
+  "screenshots": []
+}
+]
