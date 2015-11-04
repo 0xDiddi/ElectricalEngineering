@@ -1,0 +1,24 @@
+!SESSION 2015-11-04 21:45:07.525 -----------------------------------------------
+eclipse.buildId=4.3.0.M20130911-1000
+java.version=1.8.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=de_DE
+Framework arguments:  -product org.eclipse.epp.package.standard.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.standard.product
+
+!ENTRY org.eclipse.mylyn.tasks.ui 4 0 2015-11-04 21:45:15.603
+!MESSAGE Could not load repository template extension contributed by org.springsource.ide.eclipse.dashboard.ui with connectorKind jira
+
+!ENTRY org.eclipse.mylyn.tasks.ui 4 0 2015-11-04 21:45:15.646
+!MESSAGE Could not load repository template extension contributed by org.springsource.ide.eclipse.dashboard.ui with connectorKind jira
+
+!ENTRY org.springsource.ide.eclipse.commons.frameworks.core 0 0 2015-11-04 21:45:45.907
+!MESSAGE Result of converting legacy STS 2.x workspace preferences to 3.x
+!SUBENTRY 1 org.springsource.ide.eclipse.commons.frameworks.core 0 0 2015-11-04 21:45:45.907
+!MESSAGE Converted legacy STS plugin preferences
+!SUBENTRY 1 unknown 0 0 2015-11-04 21:45:45.907
+!MESSAGE OK
+!SUBENTRY 1 org.springsource.ide.eclipse.commons.frameworks.core 0 0 2015-11-04 21:45:45.907
+!MESSAGE Converted legacy Roo plugin state locations
+!SUBENTRY 1 org.springsource.ide.eclipse.commons.frameworks.core 0 0 2015-11-04 21:45:45.907
+!MESSAGE Converted legacy STS plugin state locations
