@@ -12,20 +12,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient{
-
-    public String name;
+public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient {
 
     public static final int SLOT_WIRE_IN = 0;
     public static final int SLOT_COIL_IN = 1;
     public static final int SLOT_COIL_OUT = 2;
-
-    private int lastEnergyStored, lastCoilAmount, lastWindTime;
-
+    public String name;
     public EnergyStorage storage = new EnergyStorage(50000, 1000);
-
     public int coilAmount, currCoilAmount;
     public int windTime, currWindTime;
+    private int lastEnergyStored, lastCoilAmount, lastWindTime;
 
     public TileEntityCoilWinder() {
         slots = new ItemStack[3];
@@ -52,7 +48,7 @@ public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEn
                 if (currWindTime == windTime) {
                     currWindTime = 0;
                     currCoilAmount--;
-                    input.setItemDamage(input.getItemDamage()-1);
+                    input.setItemDamage(input.getItemDamage() - 1);
                 }
                 if (input.getItemDamage() <= 0) {
                     slots[SLOT_COIL_OUT] = slots[SLOT_COIL_IN].copy();
@@ -63,10 +59,10 @@ public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEn
             }
 
             if (slots[SLOT_WIRE_IN] != null) {
-                if (slots[SLOT_WIRE_IN].getItem() == Main.wireCopper && currCoilAmount+1 <= coilAmount) {
+                if (slots[SLOT_WIRE_IN].getItem() == Main.wireCopper && currCoilAmount + 1 <= coilAmount) {
                     currCoilAmount++;
                     slots[SLOT_WIRE_IN].stackSize--;
-                    if (slots[SLOT_WIRE_IN].stackSize<=0) {
+                    if (slots[SLOT_WIRE_IN].stackSize <= 0) {
                         slots[SLOT_WIRE_IN] = null;
                     }
                 }
@@ -79,7 +75,9 @@ public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEn
 
         if (slots[SLOT_COIL_IN] != null) {
             if (slots[SLOT_COIL_IN].getItem() == Main.coil && currCoilAmount > 0) {
-                if (slots[SLOT_COIL_OUT] == null) { return true; }
+                if (slots[SLOT_COIL_OUT] == null) {
+                    return true;
+                }
             }
         }
 
@@ -103,28 +101,38 @@ public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEn
     }
 
     @SideOnly(Side.CLIENT)
-    public int getEnergyToScale(int i) { return storage.getEnergyStored() * i / storage.getMaxEnergyStored(); }
+    public int getEnergyToScale(int i) {
+        return storage.getEnergyStored() * i / storage.getMaxEnergyStored();
+    }
 
     @SideOnly(Side.CLIENT)
-    public int getCoilAmountToScale(int i) { return currCoilAmount * i / coilAmount; }
+    public int getCoilAmountToScale(int i) {
+        return currCoilAmount * i / coilAmount;
+    }
 
     @SideOnly(Side.CLIENT)
-    public int getWindTimeToScale(int i){
+    public int getWindTimeToScale(int i) {
         return currWindTime * i / windTime;
     }
 
     @SideOnly(Side.CLIENT)
-    public int getCoilProgressToScale(int i) { return (2048-slots[SLOT_COIL_IN].getItemDamage()) * i / slots[SLOT_COIL_IN].getMaxDamage(); }
+    public int getCoilProgressToScale(int i) {
+        return (2048 - slots[SLOT_COIL_IN].getItemDamage()) * i / slots[SLOT_COIL_IN].getMaxDamage();
+    }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player){
+    public boolean isUseableByPlayer(EntityPlayer player) {
         return player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64;
     }
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
-        if (slot == SLOT_WIRE_IN && stack.getItem() == Main.wireCopper) { return true; }
-        if (slot == SLOT_COIL_IN && stack.getItem() == Main.coil) { return true; }
+        if (slot == SLOT_WIRE_IN && stack.getItem() == Main.wireCopper) {
+            return true;
+        }
+        if (slot == SLOT_COIL_IN && stack.getItem() == Main.coil) {
+            return true;
+        }
         return false;
     }
 
@@ -140,7 +148,9 @@ public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEn
 
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) { return storage.receiveEnergy(maxReceive, simulate); }
+    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
+        return storage.receiveEnergy(maxReceive, simulate);
+    }
 
     @Override
     public int getEnergyStored(ForgeDirection from) {
@@ -170,5 +180,7 @@ public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEn
     }
 
     @Override
-    public void sendUpdate() { PacketSyncerToClient.sendPacket(this); }
+    public void sendUpdate() {
+        PacketSyncerToClient.sendPacket(this);
+    }
 }

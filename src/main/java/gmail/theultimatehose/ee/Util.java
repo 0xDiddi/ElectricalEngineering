@@ -14,7 +14,7 @@ public class Util {
 
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-    public static void registerEvent(Object o){
+    public static void registerEvent(Object o) {
         MinecraftForge.EVENT_BUS.register(o);
         FMLCommonHandler.instance().bus().register(o);
     }

@@ -13,12 +13,14 @@ import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SortingRecipeHandler extends TemplateRecipeHandler {
 
-    public SortingRecipeHandler() { RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0); }
+    public SortingRecipeHandler() {
+        RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
+    }
 
     @Override
     public void loadTransferRects() {
@@ -76,17 +78,21 @@ public class SortingRecipeHandler extends TemplateRecipeHandler {
     }
 
     @Override
-    public String getGuiTexture() { return "ee:textures/gui/guiMAD.png"; }
+    public String getGuiTexture() {
+        return "ee:textures/gui/guiMAD.png";
+    }
 
     @Override
     public void drawExtras(int recipe) {
         drawProgressBar(3, 21, 176, 0, 20, 30, 100, 1);
-        CachedSorting sort = (CachedSorting)this.arecipes.get(recipe);
+        CachedSorting sort = (CachedSorting) this.arecipes.get(recipe);
         drawChanceString(sort.getIngredient().item.getItem() == Main.pcbScrapHV);
     }
 
     @Override
-    public Class<? extends GuiContainer> getGuiClass() { return GUIMAD.class; }
+    public Class<? extends GuiContainer> getGuiClass() {
+        return GUIMAD.class;
+    }
 
     @Override
     public void drawBackground(int recipe) {
@@ -96,7 +102,9 @@ public class SortingRecipeHandler extends TemplateRecipeHandler {
     }
 
     @Override
-    public int recipiesPerPage() { return 1; }
+    public int recipiesPerPage() {
+        return 1;
+    }
 
     public void drawChanceString(boolean hv) {
         if (!hv) {
@@ -106,10 +114,14 @@ public class SortingRecipeHandler extends TemplateRecipeHandler {
         }
     }
 
-    public String getName() { return Util.MOD_ID_LOWER + ".sorting"; }
+    public String getName() {
+        return Util.MOD_ID_LOWER + ".sorting";
+    }
 
     @Override
-    public String getRecipeName() { return "Sorting"; }
+    public String getRecipeName() {
+        return "Sorting";
+    }
 
     public class CachedSorting extends CachedRecipe {
 

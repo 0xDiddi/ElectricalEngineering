@@ -2,19 +2,15 @@ package gmail.theultimatehose.ee.recipe;
 
 
 import gmail.theultimatehose.ee.Main;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.ArrayList;
 
-public class SolderRecipe extends ShapedOreRecipe{
+public class SolderRecipe extends ShapedOreRecipe {
 
     public static ArrayList<SolderRecipe> recipes;
 
@@ -31,7 +27,8 @@ public class SolderRecipe extends ShapedOreRecipe{
 
     public static SolderRecipe checkMatch(ItemStack[] matrix) {
 
-        recipes: for (SolderRecipe sr : recipes) {
+        recipes:
+        for (SolderRecipe sr : recipes) {
             Object[] obj = sr.getInput();
             ItemStack[][] res = new ItemStack[obj.length][];
 
@@ -52,7 +49,8 @@ public class SolderRecipe extends ShapedOreRecipe{
             }
 
             index = 0;
-            slot: for (ItemStack[] is : res) {
+            slot:
+            for (ItemStack[] is : res) {
                 if (is != null) {
                     if (matrix[index] != null) {
                         if (is.length == 1) {

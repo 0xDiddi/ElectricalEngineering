@@ -7,16 +7,13 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import gmail.theultimatehose.ee.Util;
 import gmail.theultimatehose.ee.gui.GUISolder;
 import gmail.theultimatehose.ee.recipe.SolderRecipe;
-import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SolderingRecipeHandler extends TemplateRecipeHandler {

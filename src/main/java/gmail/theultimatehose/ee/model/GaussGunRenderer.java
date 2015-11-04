@@ -1,11 +1,6 @@
 package gmail.theultimatehose.ee.model;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainerCreative;
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
@@ -19,11 +14,16 @@ public class GaussGunRenderer implements IItemRenderer {
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {
 
         switch (type) {
-            case EQUIPPED: return true;
-            case EQUIPPED_FIRST_PERSON: return true;
-            case INVENTORY: return true;
-            case ENTITY: return true;
-            default: return false;
+            case EQUIPPED:
+                return true;
+            case EQUIPPED_FIRST_PERSON:
+                return true;
+            case INVENTORY:
+                return true;
+            case ENTITY:
+                return true;
+            default:
+                return false;
         }
 
     }

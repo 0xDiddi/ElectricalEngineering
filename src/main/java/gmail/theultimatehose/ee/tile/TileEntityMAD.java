@@ -15,29 +15,23 @@ import java.util.Random;
 
 public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient {
 
-    public String name;
-
     public static final int SLOT_SCRAB_IN = 0;
     public static final int SLOT_CAPACITOR_LV = 1;
     public static final int SLOT_TRANSISTOR = 2;
     public static final int SLOT_RESISTOR = 3;
     public static final int SLOT_CAPACITOR_HV = 4;
     public static final int SLOT_TRANSFORMER = 5;
-
     public static final int SLOT_ACID_IN = 6;
     public static final int SLOT_BUCKET_OUT = 7;
     public static final int SLOT_CB_IN = 8;
     public static final int SLOT_PCB_OUT = 9;
-
-    private int lastEnergyStored = 0, lastSortTime, lastEtchTime, lastAcidAmount;
-
-    private int nextOut;
-
+    public String name;
     public int sortTime, currSortTime;
     public int etchTime, currEtchTime;
     public int acidAmount, currAcidAmount;
-
     public EnergyStorage storage = new EnergyStorage(50000, 1000);
+    private int lastEnergyStored = 0, lastSortTime, lastEtchTime, lastAcidAmount;
+    private int nextOut;
 
     public TileEntityMAD() {
         slots = new ItemStack[10];
@@ -52,9 +46,9 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
     private void generateNextOutput(boolean HV) {
         Random rng = new Random();
         if (HV) {
-            nextOut = rng.nextInt(5)+1;
+            nextOut = rng.nextInt(5) + 1;
         } else {
-            nextOut = rng.nextInt(3)+1;
+            nextOut = rng.nextInt(3) + 1;
         }
     }
 
@@ -62,10 +56,10 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
     public void updateEntity() {
         if (!this.worldObj.isRemote) {
 
-            if (storage.getEnergyStored()>=20 && canSort()) {
+            if (storage.getEnergyStored() >= 20 && canSort()) {
                 currSortTime++;
                 storage.extractEnergy(20, false);
-                if (currSortTime==sortTime) {
+                if (currSortTime == sortTime) {
                     finishSort();
                     currSortTime = 0;
                     this.markDirty();
@@ -74,11 +68,11 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
                 currSortTime = 0;
             }
 
-            if (storage.getEnergyStored()>=100 && canEtch() && currAcidAmount>0) {
+            if (storage.getEnergyStored() >= 100 && canEtch() && currAcidAmount > 0) {
                 currEtchTime++;
                 storage.extractEnergy(100, false);
-                currAcidAmount-=1;
-                if (currEtchTime==etchTime) {
+                currAcidAmount -= 1;
+                if (currEtchTime == etchTime) {
                     finishEtch();
                     currEtchTime = 0;
                     this.markDirty();
@@ -88,8 +82,8 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
             }
 
             if (slots[SLOT_ACID_IN] != null) {
-                if (slots[SLOT_ACID_IN].getItem() == Main.bucketAcid && currAcidAmount+1000<=acidAmount) {
-                    currAcidAmount+=1000;
+                if (slots[SLOT_ACID_IN].getItem() == Main.bucketAcid && currAcidAmount + 1000 <= acidAmount) {
+                    currAcidAmount += 1000;
                     slots[SLOT_ACID_IN] = null;
                     if (slots[SLOT_BUCKET_OUT] == null) {
                         slots[SLOT_BUCKET_OUT] = new ItemStack(Items.bucket);
@@ -125,20 +119,30 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
     }
 
     private void finishSort() {
-        if (slots[nextOut]==null) {
+        if (slots[nextOut] == null) {
             switch (nextOut) {
-                case SLOT_CAPACITOR_LV: slots[nextOut] = new ItemStack(Main.capacitorLV, 1); break;
-                case SLOT_CAPACITOR_HV: slots[nextOut] = new ItemStack(Main.capacitorHV, 1); break;
-                case SLOT_TRANSISTOR: slots[nextOut] = new ItemStack(Main.transistor, 1); break;
-                case SLOT_RESISTOR: slots[nextOut] = new ItemStack(Main.resistor, 1); break;
-                case SLOT_TRANSFORMER: slots[nextOut] = new ItemStack(Main.transformer, 1); break;
+                case SLOT_CAPACITOR_LV:
+                    slots[nextOut] = new ItemStack(Main.capacitorLV, 1);
+                    break;
+                case SLOT_CAPACITOR_HV:
+                    slots[nextOut] = new ItemStack(Main.capacitorHV, 1);
+                    break;
+                case SLOT_TRANSISTOR:
+                    slots[nextOut] = new ItemStack(Main.transistor, 1);
+                    break;
+                case SLOT_RESISTOR:
+                    slots[nextOut] = new ItemStack(Main.resistor, 1);
+                    break;
+                case SLOT_TRANSFORMER:
+                    slots[nextOut] = new ItemStack(Main.transformer, 1);
+                    break;
             }
         } else {
             slots[nextOut].stackSize++;
         }
         slots[SLOT_SCRAB_IN].stackSize--;
-        if (slots[SLOT_SCRAB_IN].stackSize<=0) slots[SLOT_SCRAB_IN] = null;
-        if (slots[SLOT_SCRAB_IN]!=null) generateNextOutput(slots[SLOT_SCRAB_IN].getItem()==Main.pcbScrapHV);
+        if (slots[SLOT_SCRAB_IN].stackSize <= 0) slots[SLOT_SCRAB_IN] = null;
+        if (slots[SLOT_SCRAB_IN] != null) generateNextOutput(slots[SLOT_SCRAB_IN].getItem() == Main.pcbScrapHV);
     }
 
     private boolean canEtch() {
@@ -157,13 +161,13 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
             slots[SLOT_PCB_OUT].stackSize++;
         }
         slots[SLOT_CB_IN].stackSize--;
-        if (slots[SLOT_CB_IN].stackSize<=0) slots[SLOT_CB_IN] = null;
+        if (slots[SLOT_CB_IN].stackSize <= 0) slots[SLOT_CB_IN] = null;
     }
 
     public boolean canSlotHandle(int slot, int amount) {
         if (slots[slot] != null) {
             ItemStack stack = slots[slot];
-            return stack.stackSize+amount<=stack.getMaxStackSize();
+            return stack.stackSize + amount <= stack.getMaxStackSize();
         }
         return true;
     }
@@ -187,10 +191,14 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
     }
 
     @Override
-    public String getInventoryName() {return "MAD (Mechanical Arm Device)"; }
+    public String getInventoryName() {
+        return "MAD (Mechanical Arm Device)";
+    }
 
     @Override
-    public int getSizeInventory() {return slots.length; }
+    public int getSizeInventory() {
+        return slots.length;
+    }
 
     public boolean isUseableByPlayer(EntityPlayer player) {
         return player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64;
@@ -198,9 +206,9 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack item) {
-        if (slot==SLOT_SCRAB_IN && (item.getItem()== Main.pcbScrapLV || item.getItem()==Main.pcbScrapHV)) {
+        if (slot == SLOT_SCRAB_IN && (item.getItem() == Main.pcbScrapLV || item.getItem() == Main.pcbScrapHV)) {
             return true;
-        } else if (slot==SLOT_ACID_IN && item.getItem() == Main.bucketAcid) {
+        } else if (slot == SLOT_ACID_IN && item.getItem() == Main.bucketAcid) {
             return true;
         }
         return false;
@@ -227,7 +235,9 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
     }
 
     @Override
-    public int[] getValues() {return new int[]{storage.getEnergyStored(), currSortTime, currEtchTime, currAcidAmount}; }
+    public int[] getValues() {
+        return new int[]{storage.getEnergyStored(), currSortTime, currEtchTime, currAcidAmount};
+    }
 
     @Override
     public void setValues(int[] values) {
@@ -246,9 +256,15 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
         return storage.getEnergyStored() * i / storage.getMaxEnergyStored();
     }
 
-    public int getSortTimeToScale(int i) {return currSortTime * i / sortTime; }
+    public int getSortTimeToScale(int i) {
+        return currSortTime * i / sortTime;
+    }
 
-    public int getEtchTimeToScale(int i) {return currEtchTime * i / etchTime; }
+    public int getEtchTimeToScale(int i) {
+        return currEtchTime * i / etchTime;
+    }
 
-    public int getAcidAmountToScale(int i) {return currAcidAmount * i / acidAmount; }
+    public int getAcidAmountToScale(int i) {
+        return currAcidAmount * i / acidAmount;
+    }
 }

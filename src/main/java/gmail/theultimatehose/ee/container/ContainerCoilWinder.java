@@ -40,7 +40,7 @@ public class ContainerCoilWinder extends Container {
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slotNum) {
         ItemStack stack = null;
-        Slot slot = (Slot)this.inventorySlots.get(slotNum);
+        Slot slot = (Slot) this.inventorySlots.get(slotNum);
 
         if (slot != null && slot.getHasStack()) {
 

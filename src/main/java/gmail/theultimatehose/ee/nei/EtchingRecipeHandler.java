@@ -15,7 +15,9 @@ import java.awt.*;
 
 public class EtchingRecipeHandler extends TemplateRecipeHandler {
 
-    public EtchingRecipeHandler() { RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0); }
+    public EtchingRecipeHandler() {
+        RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
+    }
 
     @Override
     public void loadTransferRects() {
@@ -57,7 +59,9 @@ public class EtchingRecipeHandler extends TemplateRecipeHandler {
     }
 
     @Override
-    public Class<? extends GuiContainer> getGuiClass() { return GUIMAD.class; }
+    public Class<? extends GuiContainer> getGuiClass() {
+        return GUIMAD.class;
+    }
 
     @Override
     public void drawBackground(int recipe) {
@@ -68,13 +72,19 @@ public class EtchingRecipeHandler extends TemplateRecipeHandler {
 
 
     @Override
-    public int recipiesPerPage() { return 1; }
+    public int recipiesPerPage() {
+        return 1;
+    }
 
 
-    public String getName() { return Util.MOD_ID_LOWER + ".etching"; }
+    public String getName() {
+        return Util.MOD_ID_LOWER + ".etching";
+    }
 
     @Override
-    public String getRecipeName() { return "Etching"; }
+    public String getRecipeName() {
+        return "Etching";
+    }
 
     public class CachedEtching extends CachedRecipe {
 

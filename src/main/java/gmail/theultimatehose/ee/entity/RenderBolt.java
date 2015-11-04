@@ -11,13 +11,13 @@ import org.lwjgl.opengl.GL12;
 
 public class RenderBolt extends Render {
 
-    private static final ResourceLocation arrowTextures = new ResourceLocation("textures/entity/beacon_beam.png");
+    private static final ResourceLocation arrowTextures = new ResourceLocation("textures/entity/arrow.png");
     private static final String __OBFID = "CL_00000978";
 
     /**
      * Actually renders the given argument. This is a synthetic bridge method, always casting down its argument and then
      * handing it off to a worker function which does the actual work. In all probabilty, the class Render is generic
-     * (Render<T extends Entity) and this method has signature public void func_76986_a(T entity, double d, double d1,
+     * (Render<T> extends Entity) and this method has signature public void func_76986_a(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
     public void doRender(EntityArrow p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_) {

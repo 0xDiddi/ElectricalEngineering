@@ -26,7 +26,7 @@ public class GUICoilWinder extends GuiContainer {
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
         String localMachineName = StatCollector.translateToLocal(this.tileCoilWinder.getInventoryName());
-        this.fontRendererObj.drawString(localMachineName, (xSize-fontRendererObj.getStringWidth(localMachineName))/2, -10, 16777215);
+        this.fontRendererObj.drawString(localMachineName, (xSize - fontRendererObj.getStringWidth(localMachineName)) / 2, -10, 16777215);
     }
 
     @Override
@@ -34,24 +34,24 @@ public class GUICoilWinder extends GuiContainer {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(resLoc);
-        this.drawTexturedModalRect((this.width-this.xSize)/2, (this.height-this.ySize)/2, 0, 0, this.xSize, this.ySize);
+        this.drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);
 
-        if (this.tileCoilWinder.getEnergyStored(ForgeDirection.UNKNOWN)>0) {
+        if (this.tileCoilWinder.getEnergyStored(ForgeDirection.UNKNOWN) > 0) {
             int i = this.tileCoilWinder.getEnergyToScale(58);
-            this.drawTexturedModalRect(this.guiLeft+110, this.guiTop+61, 176, 32, i, 11);
+            this.drawTexturedModalRect(this.guiLeft + 110, this.guiTop + 61, 176, 32, i, 11);
         }
         if (this.tileCoilWinder.currCoilAmount > 0) {
             int i = this.tileCoilWinder.getCoilAmountToScale(72);
-            this.drawTexturedModalRect(this.guiLeft+46, this.guiTop+6+72-i, 234, 72-i, 16, i);
+            this.drawTexturedModalRect(this.guiLeft + 46, this.guiTop + 6 + 72 - i, 234, 72 - i, 16, i);
         }
         if (this.tileCoilWinder.currWindTime > 0) {
             int i = this.tileCoilWinder.getWindTimeToScale(26);
-            this.drawTexturedModalRect(this.guiLeft+70, this.guiTop+5, 176, 43, i, 26);
+            this.drawTexturedModalRect(this.guiLeft + 70, this.guiTop + 5, 176, 43, i, 26);
         }
         if (this.tileCoilWinder.slots[TileEntityCoilWinder.SLOT_COIL_IN] != null) {
             if (this.tileCoilWinder.slots[TileEntityCoilWinder.SLOT_COIL_IN].getItemDamage() > 0) {
                 int i = this.tileCoilWinder.getCoilProgressToScale(22);
-                this.drawTexturedModalRect(this.guiLeft+75, this.guiTop+32, 196, 0, 16, i);
+                this.drawTexturedModalRect(this.guiLeft + 75, this.guiTop + 32, 196, 0, 16, i);
             }
         }
     }
@@ -59,12 +59,12 @@ public class GUICoilWinder extends GuiContainer {
     @Override
     public void drawScreen(int x, int y, float f) {
         super.drawScreen(x, y, f);
-        String textEnergy = this.tileCoilWinder.storage.getEnergyStored()+"/"+this.tileCoilWinder.storage.getMaxEnergyStored()+" RF";
-        if (x>=guiLeft+110 && y>=guiTop+61 && x<=guiLeft+110+58 && y<=guiTop+61+11) {
+        String textEnergy = this.tileCoilWinder.storage.getEnergyStored() + "/" + this.tileCoilWinder.storage.getMaxEnergyStored() + " RF";
+        if (x >= guiLeft + 110 && y >= guiTop + 61 && x <= guiLeft + 110 + 58 && y <= guiTop + 61 + 11) {
             this.func_146283_a(Collections.singletonList(textEnergy), x, y);
         }
-        String textCoil = this.tileCoilWinder.currCoilAmount+"/"+this.tileCoilWinder.coilAmount;
-        if (x>=guiLeft+46 && y>=guiTop+6 && x<=guiLeft+46+16 && y<=guiTop+6+72) {
+        String textCoil = this.tileCoilWinder.currCoilAmount + "/" + this.tileCoilWinder.coilAmount;
+        if (x >= guiLeft + 46 && y >= guiTop + 6 && x <= guiLeft + 46 + 16 && y <= guiTop + 6 + 72) {
             this.func_146283_a(Collections.singletonList(textCoil), x, y);
         }
     }

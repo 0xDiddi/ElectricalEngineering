@@ -5,21 +5,21 @@ import gmail.theultimatehose.ee.recipe.SolderRecipe;
 import gmail.theultimatehose.ee.tile.TileEntitySolder;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ContainerSolder extends Container {
 
-	private TileEntitySolder tileSolder;
+    private TileEntitySolder tileSolder;
 
-	public ContainerSolder(InventoryPlayer inventory, TileEntitySolder solder) {
-		this.tileSolder = solder;
+    public ContainerSolder(InventoryPlayer inventory, TileEntitySolder solder) {
+        this.tileSolder = solder;
 
-		//Desolder slots
-		this.addSlotToContainer(new Slot(this.tileSolder, TileEntitySolder.SLOT_PCB_IN, 13, 8));
-		this.addSlotToContainer(new SlotOutput(this.tileSolder, TileEntitySolder.SLOT_PCB_OUT, 13, 58));
+        //Desolder slots
+        this.addSlotToContainer(new Slot(this.tileSolder, TileEntitySolder.SLOT_PCB_IN, 13, 8));
+        this.addSlotToContainer(new SlotOutput(this.tileSolder, TileEntitySolder.SLOT_PCB_OUT, 13, 58));
 
         //Solder Crafting slots
         this.addSlotToContainer(new SlotOutput(this.tileSolder, TileEntitySolder.SLOT_CRAFT_RES, 139, 15));
@@ -27,14 +27,14 @@ public class ContainerSolder extends Container {
         int index = 0;
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 3; x++) {
-                this.addSlotToContainer(new Slot(this.tileSolder, index, 51+x*18, 17+y*18){
+                this.addSlotToContainer(new Slot(this.tileSolder, index, 51 + x * 18, 17 + y * 18) {
                     @Override
                     public void onSlotChanged() {
                         if (this.inventory instanceof TileEntitySolder) {
-                            TileEntitySolder solder = (TileEntitySolder)this.inventory;
-                            ItemStack[] matrix = new ItemStack[] {solder.slots[0], solder.slots[1], solder.slots[2],
-                                                                  solder.slots[3], solder.slots[4], solder.slots[5],
-                                                                  solder.slots[6], solder.slots[7], solder.slots[8]};
+                            TileEntitySolder solder = (TileEntitySolder) this.inventory;
+                            ItemStack[] matrix = new ItemStack[]{solder.slots[0], solder.slots[1], solder.slots[2],
+                                    solder.slots[3], solder.slots[4], solder.slots[5],
+                                    solder.slots[6], solder.slots[7], solder.slots[8]};
                             SolderRecipe sr = SolderRecipe.checkMatch(matrix);
                             if (sr != null) {
                                 tileSolder.startSolder(sr);
@@ -47,8 +47,8 @@ public class ContainerSolder extends Container {
             }
         }
 
-		//Player inventory slots
-		for (int i = 0; i < 3; ++i) {
+        //Player inventory slots
+        for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
                 this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
             }
@@ -58,17 +58,17 @@ public class ContainerSolder extends Container {
             this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 142));
         }
 
-	}
+    }
 
     @Override
-	public boolean canInteractWith(EntityPlayer player) {
-		return this.tileSolder.isUseableByPlayer(player);
-	}
+    public boolean canInteractWith(EntityPlayer player) {
+        return this.tileSolder.isUseableByPlayer(player);
+    }
 
-	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int slotNum) {
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer player, int slotNum) {
         ItemStack stack = null;
-        Slot slot = (Slot)this.inventorySlots.get(slotNum);
+        Slot slot = (Slot) this.inventorySlots.get(slotNum);
 
         if (slot != null && slot.getHasStack()) {
 
@@ -90,7 +90,7 @@ public class ContainerSolder extends Container {
                         return null;
                     }
                 } else {
-                    return  null;
+                    return null;
                 }
             }
 
@@ -107,7 +107,7 @@ public class ContainerSolder extends Container {
             slot.onPickupFromSlot(player, stack1);
         }
 
-		return stack;
-	}
+        return stack;
+    }
 
 }

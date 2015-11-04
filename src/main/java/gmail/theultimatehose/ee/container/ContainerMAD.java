@@ -43,12 +43,14 @@ public class ContainerMAD extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer plr) {return tileMAD.isUseableByPlayer(plr); }
+    public boolean canInteractWith(EntityPlayer plr) {
+        return tileMAD.isUseableByPlayer(plr);
+    }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slotNum) {
         ItemStack stack = null;
-        Slot slot = (Slot)this.inventorySlots.get(slotNum);
+        Slot slot = (Slot) this.inventorySlots.get(slotNum);
 
         if (slot != null && slot.getHasStack()) {
 

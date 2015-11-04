@@ -28,12 +28,14 @@ public class BlockWinder extends BlockContainerExt {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) { return new TileEntityCoilWinder(); }
+    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
+        return new TileEntityCoilWinder();
+    }
 
     @Override
-    public IIcon getIcon(int side, int meta){
-        if(side == 1 && meta != 1) return this.topIcon;
-        if(side == 0) return this.bottomIcon;
+    public IIcon getIcon(int side, int meta) {
+        if (side == 1 && meta != 1) return this.topIcon;
+        if (side == 0) return this.bottomIcon;
         return this.onIcon;
     }
 
@@ -48,7 +50,7 @@ public class BlockWinder extends BlockContainerExt {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
         if (!world.isRemote) {
-            TileEntityCoilWinder winder = (TileEntityCoilWinder)world.getTileEntity(x, y, z);
+            TileEntityCoilWinder winder = (TileEntityCoilWinder) world.getTileEntity(x, y, z);
             if (winder != null) player.openGui(Main.instance, GuiHandler.WINDER_ID, world, x, y, z);
         }
         return true;
@@ -57,7 +59,7 @@ public class BlockWinder extends BlockContainerExt {
     @Override
     public void dropInventory(World world, int x, int y, int z) {
         super.dropInventory(world, x, y, z);
-        TileEntityCoilWinder tile = (TileEntityCoilWinder)world.getTileEntity(x, y, z);
+        TileEntityCoilWinder tile = (TileEntityCoilWinder) world.getTileEntity(x, y, z);
         int wire = tile.currCoilAmount;
         if (wire > 0) {
             while (wire > 0) {

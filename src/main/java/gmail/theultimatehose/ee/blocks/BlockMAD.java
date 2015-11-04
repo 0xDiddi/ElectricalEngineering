@@ -35,47 +35,47 @@ public class BlockMAD extends BlockContainerExt {
 
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack) {
-        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
-        if(rotation == 0) world.setBlockMetadataWithNotify(x, y, z, 0, 0); //north = front
-        if(rotation == 1) world.setBlockMetadataWithNotify(x, y, z, 1, 3); //east = front
-        if(rotation == 2) world.setBlockMetadataWithNotify(x, y, z, 2, 2); //south = front
-        if(rotation == 3) world.setBlockMetadataWithNotify(x, y, z, 3, 3); //west = front
+        int rotation = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        if (rotation == 0) world.setBlockMetadataWithNotify(x, y, z, 0, 0); //north = front
+        if (rotation == 1) world.setBlockMetadataWithNotify(x, y, z, 1, 3); //east = front
+        if (rotation == 2) world.setBlockMetadataWithNotify(x, y, z, 2, 2); //south = front
+        if (rotation == 3) world.setBlockMetadataWithNotify(x, y, z, 3, 3); //west = front
     }
 
     @Override
     public IIcon getIcon(int side, int meta) {
-        if(side == 3) return this.frontIcon;
-        if(side == 2) return this.backIcon;
-        if(side == 1) return this.topIcon;
-        if(side == 0) return this.bottomIcon;
+        if (side == 3) return this.frontIcon;
+        if (side == 2) return this.backIcon;
+        if (side == 1) return this.topIcon;
+        if (side == 0) return this.bottomIcon;
         return this.sideIcon;
     }
 
     @Override
-    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
+    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
         int meta = world.getBlockMetadata(x, y, z);
 
         switch (meta) {
             case 0:
-                if (side==2) return this.frontIcon;
-                if (side==3) return this.backIcon;
+                if (side == 2) return this.frontIcon;
+                if (side == 3) return this.backIcon;
                 break;
             case 1:
-                if (side==5) return this.frontIcon;
-                if (side==4) return this.backIcon;
+                if (side == 5) return this.frontIcon;
+                if (side == 4) return this.backIcon;
                 break;
             case 2:
-                if (side==3) return this.frontIcon;
-                if (side==2) return this.backIcon;
+                if (side == 3) return this.frontIcon;
+                if (side == 2) return this.backIcon;
                 break;
             case 3:
-                if (side==4) return this.frontIcon;
-                if (side==5) return this.backIcon;
+                if (side == 4) return this.frontIcon;
+                if (side == 5) return this.backIcon;
                 break;
         }
 
-        if(side == 1) return this.topIcon;
-        if(side == 0) return this.bottomIcon;
+        if (side == 1) return this.topIcon;
+        if (side == 0) return this.bottomIcon;
         return this.sideIcon;
     }
 
@@ -83,7 +83,7 @@ public class BlockMAD extends BlockContainerExt {
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg) {
         this.topIcon = iconReg.registerIcon("ee:madTop");
-        this.sideIcon = Blocks.iron_block.getIcon(0,0);
+        this.sideIcon = Blocks.iron_block.getIcon(0, 0);
         this.frontIcon = iconReg.registerIcon("ee:madFront");
         this.backIcon = iconReg.registerIcon("ee:madBack");
         this.bottomIcon = iconReg.registerIcon("ee:MachineBottom");
@@ -97,7 +97,7 @@ public class BlockMAD extends BlockContainerExt {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
         if (!world.isRemote) {
-            TileEntityMAD mad = (TileEntityMAD)world.getTileEntity(x,y,z);
+            TileEntityMAD mad = (TileEntityMAD) world.getTileEntity(x, y, z);
             if (mad != null) player.openGui(Main.instance, GuiHandler.MAD_ID, world, x, y, z);
         }
         return true;

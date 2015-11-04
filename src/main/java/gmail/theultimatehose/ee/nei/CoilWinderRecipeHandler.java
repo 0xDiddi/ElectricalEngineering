@@ -16,7 +16,9 @@ import java.awt.*;
 
 public class CoilWinderRecipeHandler extends TemplateRecipeHandler {
 
-    public CoilWinderRecipeHandler() { RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0); }
+    public CoilWinderRecipeHandler() {
+        RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
+    }
 
     @Override
     public void loadTransferRects() {
@@ -99,10 +101,14 @@ public class CoilWinderRecipeHandler extends TemplateRecipeHandler {
         }
 
         @Override
-        public PositionedStack getOtherStack() { return wire; }
+        public PositionedStack getOtherStack() {
+            return wire;
+        }
 
         @Override
-        public PositionedStack getIngredient() { return input; }
+        public PositionedStack getIngredient() {
+            return input;
+        }
     }
 
 }

@@ -20,7 +20,7 @@ public class CfgValues {
     public static void defineConfigValues(Configuration config) {
 
         for (CfgFloatValues currConf : floatConfig) {
-            currConf.currentValue = ((float)config.get(currConf.category, currConf.name, currConf.defaultValue, currConf.desc, currConf.min, currConf.max).getDouble());
+            currConf.currentValue = ((float) config.get(currConf.category, currConf.name, currConf.defaultValue, currConf.desc, currConf.min, currConf.max).getDouble());
         }
 
     }

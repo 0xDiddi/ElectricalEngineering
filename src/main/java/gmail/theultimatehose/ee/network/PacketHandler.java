@@ -10,16 +10,16 @@
 
 package gmail.theultimatehose.ee.network;
 
-import gmail.theultimatehose.ee.network.sync.PacketSyncerToClient;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
+import gmail.theultimatehose.ee.network.sync.PacketSyncerToClient;
 
-public class PacketHandler{
+public class PacketHandler {
 
     public static SimpleNetworkWrapper theNetwork;
 
-    public static void init(){
+    public static void init() {
         theNetwork = NetworkRegistry.INSTANCE.newSimpleChannel("ee");
 
         theNetwork.registerMessage(PacketSyncerToClient.Handler.class, PacketSyncerToClient.class, 0, Side.CLIENT);

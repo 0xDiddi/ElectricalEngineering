@@ -30,10 +30,10 @@ public class BlockBurntMachine extends Block {
         ArrayList<ItemStack> list = new ArrayList<ItemStack>(2);
         Random rand = new Random();
         float chance = CfgFloatValues.OLD_MACHINE_DROP_CHANCE.getValue();
-        int chanceLV = Math.round(chance*5);
-        int chanceHV = Math.round(chance*9);
-        int amountLV = Math.max(0, (rand.nextInt(7)-chanceLV) + fortune);
-        int amountHV = Math.max(0, (rand.nextInt(11)-chanceHV) + fortune);
+        int chanceLV = Math.round(chance * 5);
+        int chanceHV = Math.round(chance * 9);
+        int amountLV = Math.max(0, (rand.nextInt(7) - chanceLV) + fortune);
+        int amountHV = Math.max(0, (rand.nextInt(11) - chanceHV) + fortune);
 
         list.add(new ItemStack(Main.pcbLVBurnt, amountLV));
         list.add(new ItemStack(Main.pcbHVBurnt, amountHV));
@@ -50,8 +50,8 @@ public class BlockBurntMachine extends Block {
 
     @Override
     public IIcon getIcon(int side, int meta) {
-        if(side == 1) return this.topIcon;
-        if(side == 0) return this.bottomIcon;
+        if (side == 1) return this.topIcon;
+        if (side == 0) return this.bottomIcon;
         return this.sideIcon;
     }
 }

@@ -10,7 +10,7 @@
 
 package gmail.theultimatehose.ee.network.sync;
 
-public interface IPacketSyncerToClient{
+public interface IPacketSyncerToClient {
 
     /**
      * @return The values that should be sent to the Client
@@ -19,6 +19,7 @@ public interface IPacketSyncerToClient{
 
     /**
      * Sets the Values on the Client
+     *
      * @param values The Values
      */
     void setValues(int[] values);

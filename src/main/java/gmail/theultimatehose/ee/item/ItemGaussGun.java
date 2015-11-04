@@ -38,7 +38,7 @@ public class ItemGaussGun extends ItemEnergyContainer {
     @Override
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tabs, List list){
+    public void getSubItems(Item item, CreativeTabs tabs, List list) {
         ItemStack stackFull = new ItemStack(this);
         this.setEnergy(stackFull, this.getMaxEnergyStored(stackFull));
         list.add(stackFull);
@@ -87,7 +87,7 @@ public class ItemGaussGun extends ItemEnergyContainer {
         if (flag || player.inventory.hasItem(Items.arrow)) {
             float f = 1f;
 
-            this.setEnergy(stack, energyStored-energyUsed);
+            this.setEnergy(stack, energyStored - energyUsed);
 
             EntityBolt entityBolt = new EntityBolt(world, player, f);
 
@@ -98,9 +98,9 @@ public class ItemGaussGun extends ItemEnergyContainer {
 
             NBTTagCompound compound = stack.getTagCompound();
             float cfg = CfgFloatValues.GAUSS_FUN_DAMAGE.getValue();
-            double multiplier = compound.getDouble("multiplier")*cfg;
+            double multiplier = compound.getDouble("multiplier") * cfg;
 
-            entityBolt.setDamage(Math.min(1000, multiplier * charge)/2);
+            entityBolt.setDamage(Math.min(1000, multiplier * charge) / 2);
 
             stack.damageItem(1, player);
             world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
@@ -118,7 +118,9 @@ public class ItemGaussGun extends ItemEnergyContainer {
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack p_77626_1_) { return 7200; }
+    public int getMaxItemUseDuration(ItemStack p_77626_1_) {
+        return 7200;
+    }
 
     @Override
     public EnumAction getItemUseAction(ItemStack p_77661_1_) {
@@ -141,13 +143,15 @@ public class ItemGaussGun extends ItemEnergyContainer {
     }
 
     @Override
-    public boolean showDurabilityBar(ItemStack stack) { return stack.getItemDamage() < 2049; }
+    public boolean showDurabilityBar(ItemStack stack) {
+        return stack.getItemDamage() < 2049;
+    }
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
-        double energyDif = getMaxEnergyStored(stack)-getEnergyStored(stack);
+        double energyDif = getMaxEnergyStored(stack) - getEnergyStored(stack);
         double maxEnergy = getMaxEnergyStored(stack);
-        return energyDif/maxEnergy;
+        return energyDif / maxEnergy;
     }
 
     @Override
@@ -159,7 +163,7 @@ public class ItemGaussGun extends ItemEnergyContainer {
             }
             NBTTagCompound compound = stack.getTagCompound();
             float cfg = CfgFloatValues.GAUSS_FUN_DAMAGE.getValue();
-            float multiplier = compound.getFloat("multiplier")*cfg;
+            float multiplier = compound.getFloat("multiplier") * cfg;
             float dmg = (multiplier * 200.0f);
             String info = "";
             if (dmg >= 40) {
@@ -175,7 +179,7 @@ public class ItemGaussGun extends ItemEnergyContainer {
                 info += dmg;
             }
 
-            list.add("Damage after 10s: "+ info);
+            list.add("Damage after 10s: " + info);
 
             int windings = compound.getInteger("windings");
             info = "";
