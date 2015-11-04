@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 /.gradle
+/.metadata
 /.idea
 /src/main/resources/assets/electricalengineering/textures/raw_mc
 /build
