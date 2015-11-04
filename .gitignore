@@ -1,8 +1,7 @@
 <<<<<<< HEAD
 /.gradle
-*/.gradle
+/.idea
 /build
-*/build
 /*mc
 /*out
 *.iml

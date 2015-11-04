@@ -4,12 +4,12 @@ import cofh.api.energy.ItemEnergyContainer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gmail.theultimatehose.ee.config.values.CfgFloatValues;
+import gmail.theultimatehose.ee.entity.EntityBolt;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
@@ -89,12 +89,13 @@ public class ItemGaussGun extends ItemEnergyContainer {
 
             this.setEnergy(stack, energyStored-energyUsed);
 
-            EntityArrow entityBolt = new EntityArrow(world, player, f);
+            EntityBolt entityBolt = new EntityBolt(world, player, f);
 
             if (!stack.hasTagCompound()) {
                 stack.stackTagCompound = new NBTTagCompound();
                 writeDefValuesToNBT(stack);
             }
+
             NBTTagCompound compound = stack.getTagCompound();
             float cfg = CfgFloatValues.GAUSS_FUN_DAMAGE.getValue();
             double multiplier = compound.getDouble("multiplier")*cfg;
