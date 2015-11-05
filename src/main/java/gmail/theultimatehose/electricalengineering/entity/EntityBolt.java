@@ -50,33 +50,33 @@ public class EntityBolt extends Entity implements IProjectile {
     private int knockbackStrength;
     private static final String __OBFID = "CL_00001715";
 
-    public EntityBolt(World p_i1753_1_) {
-        super(p_i1753_1_);
+    public EntityBolt(World world) {
+        super(world);
         this.renderDistanceWeight = 10.0D;
         this.setSize(0.5F, 0.5F);
     }
 
-    public EntityBolt(World p_i1754_1_, double p_i1754_2_, double p_i1754_4_, double p_i1754_6_) {
-        super(p_i1754_1_);
+    public EntityBolt(World world, double x, double y, double z) {
+        super(world);
         this.renderDistanceWeight = 10.0D;
         this.setSize(0.5F, 0.5F);
-        this.setPosition(p_i1754_2_, p_i1754_4_, p_i1754_6_);
+        this.setPosition(x, y, z);
         this.yOffset = 0.0F;
     }
 
-    public EntityBolt(World p_i1755_1_, EntityLivingBase p_i1755_2_, EntityLivingBase p_i1755_3_, float p_i1755_4_, float p_i1755_5_) {
-        super(p_i1755_1_);
+    public EntityBolt(World world, EntityLivingBase entityShooting, EntityLivingBase entity2, float par3, float par4) {
+        super(world);
         this.renderDistanceWeight = 10.0D;
-        this.shootingEntity = p_i1755_2_;
+        this.shootingEntity = entityShooting;
 
-        if (p_i1755_2_ instanceof EntityPlayer) {
+        if (entityShooting instanceof EntityPlayer) {
             this.canBePickedUp = 1;
         }
 
-        this.posY = p_i1755_2_.posY + (double) p_i1755_2_.getEyeHeight() - 0.10000000149011612D;
-        double d0 = p_i1755_3_.posX - p_i1755_2_.posX;
-        double d1 = p_i1755_3_.boundingBox.minY + (double) (p_i1755_3_.height / 3.0F) - this.posY;
-        double d2 = p_i1755_3_.posZ - p_i1755_2_.posZ;
+        this.posY = entityShooting.posY + (double) entityShooting.getEyeHeight() - 0.10000000149011612D;
+        double d0 = entity2.posX - entityShooting.posX;
+        double d1 = entity2.boundingBox.minY + (double) (entity2.height / 3.0F) - this.posY;
+        double d2 = entity2.posZ - entityShooting.posZ;
         double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
 
         if (d3 >= 1.0E-7D) {
@@ -84,24 +84,24 @@ public class EntityBolt extends Entity implements IProjectile {
             float f3 = (float) (-(Math.atan2(d1, d3) * 180.0D / Math.PI));
             double d4 = d0 / d3;
             double d5 = d2 / d3;
-            this.setLocationAndAngles(p_i1755_2_.posX + d4, this.posY, p_i1755_2_.posZ + d5, f2, f3);
+            this.setLocationAndAngles(entityShooting.posX + d4, this.posY, entityShooting.posZ + d5, f2, f3);
             this.yOffset = 0.0F;
             float f4 = (float) d3 * 0.2F;
-            this.setThrowableHeading(d0, d1 + (double) f4, d2, p_i1755_4_, p_i1755_5_);
+            this.setThrowableHeading(d0, d1 + (double) f4, d2, par3, par4);
         }
     }
 
-    public EntityBolt(World p_i1756_1_, EntityLivingBase p_i1756_2_, float p_i1756_3_) {
-        super(p_i1756_1_);
+    public EntityBolt(World world, EntityLivingBase entity, float par2) {
+        super(world);
         this.renderDistanceWeight = 10.0D;
-        this.shootingEntity = p_i1756_2_;
+        this.shootingEntity = entity;
 
-        if (p_i1756_2_ instanceof EntityPlayer) {
+        if (entity instanceof EntityPlayer) {
             this.canBePickedUp = 1;
         }
 
         this.setSize(0.5F, 0.5F);
-        this.setLocationAndAngles(p_i1756_2_.posX, p_i1756_2_.posY + (double) p_i1756_2_.getEyeHeight(), p_i1756_2_.posZ, p_i1756_2_.rotationYaw, p_i1756_2_.rotationPitch);
+        this.setLocationAndAngles(entity.posX, entity.posY + (double) entity.getEyeHeight(), entity.posZ, entity.rotationYaw, entity.rotationPitch);
         this.posX -= (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
         this.posY -= 0.10000000149011612D;
         this.posZ -= (double) (MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
@@ -110,7 +110,7 @@ public class EntityBolt extends Entity implements IProjectile {
         this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI));
         this.motionZ = (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI));
         this.motionY = (double) (-MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI));
-        this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, p_i1756_3_ * 1.5F, 1.0F);
+        this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, par2 * 1.5F, 1.0F);
     }
 
     protected void entityInit() {
@@ -120,23 +120,23 @@ public class EntityBolt extends Entity implements IProjectile {
     /**
      * Similar to setArrowHeading, it's point the throwable entity to a x, y, z direction.
      */
-    public void setThrowableHeading(double p_70186_1_, double p_70186_3_, double p_70186_5_, float p_70186_7_, float p_70186_8_) {
-        float f2 = MathHelper.sqrt_double(p_70186_1_ * p_70186_1_ + p_70186_3_ * p_70186_3_ + p_70186_5_ * p_70186_5_);
-        p_70186_1_ /= (double) f2;
-        p_70186_3_ /= (double) f2;
-        p_70186_5_ /= (double) f2;
-        p_70186_1_ += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * (double) p_70186_8_;
-        p_70186_3_ += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * (double) p_70186_8_;
-        p_70186_5_ += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * (double) p_70186_8_;
-        p_70186_1_ *= (double) p_70186_7_;
-        p_70186_3_ *= (double) p_70186_7_;
-        p_70186_5_ *= (double) p_70186_7_;
-        this.motionX = p_70186_1_;
-        this.motionY = p_70186_3_;
-        this.motionZ = p_70186_5_;
-        float f3 = MathHelper.sqrt_double(p_70186_1_ * p_70186_1_ + p_70186_5_ * p_70186_5_);
-        this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(p_70186_1_, p_70186_5_) * 180.0D / Math.PI);
-        this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(p_70186_3_, (double) f3) * 180.0D / Math.PI);
+    public void setThrowableHeading(double x, double y, double z, float par3, float par4) {
+        float f2 = MathHelper.sqrt_double(x * x + y * y + z * z);
+        x /= (double) f2;
+        y /= (double) f2;
+        z /= (double) f2;
+        x += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * (double) par4;
+        y += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * (double) par4;
+        z += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * (double) par4;
+        x *= (double) par3;
+        y *= (double) par3;
+        z *= (double) par3;
+        this.motionX = x;
+        this.motionY = y;
+        this.motionZ = z;
+        float f3 = MathHelper.sqrt_double(x * x + z * z);
+        this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(x, z) * 180.0D / Math.PI);
+        this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(y, (double) f3) * 180.0D / Math.PI);
         this.ticksInGround = 0;
     }
 
@@ -154,15 +154,15 @@ public class EntityBolt extends Entity implements IProjectile {
      * Sets the velocity to the args. Args: x, y, z
      */
     @SideOnly(Side.CLIENT)
-    public void setVelocity(double p_70016_1_, double p_70016_3_, double p_70016_5_) {
-        this.motionX = p_70016_1_;
-        this.motionY = p_70016_3_;
-        this.motionZ = p_70016_5_;
+    public void setVelocity(double x, double y, double z) {
+        this.motionX = x;
+        this.motionY = y;
+        this.motionZ = z;
 
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
-            float f = MathHelper.sqrt_double(p_70016_1_ * p_70016_1_ + p_70016_5_ * p_70016_5_);
-            this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(p_70016_1_, p_70016_5_) * 180.0D / Math.PI);
-            this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(p_70016_3_, (double) f) * 180.0D / Math.PI);
+            float f = MathHelper.sqrt_double(x * x + z * z);
+            this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(x, z) * 180.0D / Math.PI);
+            this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(y, (double) f) * 180.0D / Math.PI);
             this.prevRotationPitch = this.rotationPitch;
             this.prevRotationYaw = this.rotationYaw;
             this.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
@@ -208,9 +208,9 @@ public class EntityBolt extends Entity implements IProjectile {
                 }
             } else {
                 this.inGround = false;
-                this.motionX *= (double) (this.rand.nextFloat() * 0.2F);
-                this.motionY *= (double) (this.rand.nextFloat() * 0.2F);
-                this.motionZ *= (double) (this.rand.nextFloat() * 0.2F);
+                this.motionX *= (double) (this.rand.nextFloat() * 0.5F);
+                this.motionY *= (double) (this.rand.nextFloat() * 0.5F);
+                this.motionZ *= (double) (this.rand.nextFloat() * 0.5F);
                 this.ticksInGround = 0;
                 this.ticksInAir = 0;
             }
@@ -292,9 +292,11 @@ public class EntityBolt extends Entity implements IProjectile {
                             EntityLivingBase entitylivingbase = (EntityLivingBase) movingobjectposition.entityHit;
 
                             if (!this.worldObj.isRemote) {
-                                EntityPlayer player = (EntityPlayer) entitylivingbase;
-                                InventoryPlayer inv = player.inventory;
-                                inv.addItemStackToInventory(new ItemStack(ElectricalEngineering.bolt, 1));
+                                if (entitylivingbase instanceof EntityPlayer) {
+                                    EntityPlayer player = (EntityPlayer) entitylivingbase;
+                                    InventoryPlayer inv = player.inventory;
+                                    inv.addItemStackToInventory(new ItemStack(ElectricalEngineering.bolt, 1));
+                                }
                             }
 
                             if (this.knockbackStrength > 0) {

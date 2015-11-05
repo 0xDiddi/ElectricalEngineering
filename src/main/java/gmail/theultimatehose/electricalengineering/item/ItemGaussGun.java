@@ -85,7 +85,7 @@ public class ItemGaussGun extends ItemEnergyContainer {
         }
 
         if (flag || player.inventory.hasItem(ElectricalEngineering.bolt)) {
-            float f = 1f;
+            float f = charge/12;
 
             this.setEnergy(stack, energyStored - energyUsed);
 

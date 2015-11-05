@@ -15,6 +15,7 @@ item.ElectricalEngineering_PcbUnetched.name=Unetched PCB
 item.ElectricalEngineering_PcbEtched.name=Etched PCB
 item.ElectricalEngineering_PcbControl.name=Control circuit
 item.ElectricalEngineering_PcbVoltReg.name=Voltage Regulation Circuit
+item.ElectricalEngineering_Bolt.name=Iron Bolt
 
 item.ElectricalEngineering_CapacitorLV.name=Capacitor
 item.ElectricalEngineering_CapacitorHV.name=High Voltage Capacitor
