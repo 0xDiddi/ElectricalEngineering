@@ -268,14 +268,8 @@ public class EntityBolt extends Entity implements IProjectile {
 
             if (movingobjectposition != null) {
                 if (movingobjectposition.entityHit != null) {
-                    f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
-                    int k = MathHelper.ceiling_double_int((double) f2 * this.damage);
 
-                    if (this.getIsCritical()) {
-                        k += this.rand.nextInt(k / 2 + 2);
-                    }
-
-                    DamageSource damagesource = null;
+                    DamageSource damagesource;
 
                     if (this.shootingEntity == null) {
                         damagesource = new EntityDamageSourceIndirect("bolt", this, this).setProjectile();
@@ -287,7 +281,7 @@ public class EntityBolt extends Entity implements IProjectile {
                         movingobjectposition.entityHit.setFire(5);
                     }
 
-                    if (movingobjectposition.entityHit.attackEntityFrom(damagesource, (float) k)) {
+                    if (movingobjectposition.entityHit.attackEntityFrom(damagesource, ((float) this.damage))) {
                         if (movingobjectposition.entityHit instanceof EntityLivingBase) {
                             EntityLivingBase entitylivingbase = (EntityLivingBase) movingobjectposition.entityHit;
 

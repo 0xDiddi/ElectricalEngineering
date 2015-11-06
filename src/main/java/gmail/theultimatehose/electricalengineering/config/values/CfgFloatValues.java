@@ -18,7 +18,7 @@ public enum CfgFloatValues {
             "A lower value means a higher chance"),
     OLD_MACHINE_DROP_CHANCE("Old machine: drop chance", CfgCat.RARITY_VALUES, 1.0f, 0.5f, 1.5f, "How often the old machine drops something. " +
             "A lower value means a higher chance."),
-    GAUSS_FUN_DAMAGE("Gauss Gun: damage", CfgCat.DAMAGE_VALUES, 1.0f, 0.5f, 1.5f, "The damage multiplier of the Gauss Gun. " +
+    GAUSS_GUN_DAMAGE("Gauss Gun: damage", CfgCat.DAMAGE_VALUES, 1.0f, 0.5f, 1.5f, "The damage multiplier of the Gauss Gun. " +
             "A lower value means less damage");
 
     public final String name;

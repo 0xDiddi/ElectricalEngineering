@@ -1,7 +1,10 @@
 package gmail.theultimatehose.electricalengineering.model;
 
+import gmail.theultimatehose.electricalengineering.item.ItemGaussGun;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
@@ -34,7 +37,7 @@ public class GaussGunRenderer implements IItemRenderer {
     }
 
     @Override
-    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+    public void renderItem(ItemRenderType type, ItemStack stack, Object... data) {
 
         float scale;
 
@@ -86,6 +89,24 @@ public class GaussGunRenderer implements IItemRenderer {
                 this.model.render(0.0625f);
 
                 GL11.glPopMatrix();
+
+                if (stack.hasTagCompound()) {
+                    NBTTagCompound compound = stack.getTagCompound();
+                    int charge = compound.getInteger("chargeTicks");
+                    int value = (charge / (ItemGaussGun.maxCharge/16));
+                    Tessellator tessellator = Tessellator.instance;
+
+                    tessellator.startDrawingQuads();
+                    tessellator.setColorRGBA(255, 0, 0, 255);
+                    for (int i = 0; i < value; i++) {
+                        tessellator.addVertexWithUV(i, 15, 0, 0, 0);
+                        tessellator.addVertexWithUV(i, 16, 0, 0, 0);
+                        tessellator.addVertexWithUV(1 + i, 16, 0, 0, 0);
+                        tessellator.addVertexWithUV(1 + i, 15, 0, 0, 0);
+                    }
+                    tessellator.draw();
+                }
+
             case ENTITY:
                 GL11.glPushMatrix();
                 Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("electricalengineering", "textures/model/GaussGun.png"));

@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
@@ -20,23 +21,25 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
-import net.minecraftforge.event.entity.player.ArrowNockEvent;
 
 import java.util.List;
 
 public class ItemGaussGun extends ItemEnergyContainer {
 
-    private float damageMultiplier = 0.256f;
-    private int coilWindings = 2048;
+    private float damageMultiplier = 0.768f;
+    public static int maxCharge;
+    private float cfgMultiplier;
+    private int maxCoilWindings = 2048;
 
     public ItemGaussGun() {
         super(5000000, 10000);
         this.setHasSubtypes(true);
         this.setMaxStackSize(1);
+        this.cfgMultiplier = CfgFloatValues.GAUSS_GUN_DAMAGE.getValue();
+        this.maxCharge = (int) (5000000 / (damageMultiplier * 1000));
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tabs, List list) {
         ItemStack stackFull = new ItemStack(this);
@@ -55,13 +58,29 @@ public class ItemGaussGun extends ItemEnergyContainer {
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack p_77613_1_) {
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.epic;
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemInUseCount) {
-        int charge = this.getMaxItemUseDuration(stack) - itemInUseCount;
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par3, boolean par4) {
+        if (!stack.hasTagCompound()) {
+            writeDefValuesToNBT(stack);
+        }
+
+        NBTTagCompound compound = stack.getTagCompound();
+        boolean charging = compound.getBoolean("charging");
+        int chargeTicks = compound.getInteger("chargeTicks");
+
+        if (charging && chargeTicks < maxCharge) {
+            chargeTicks++;
+            compound.setInteger("chargeTicks", chargeTicks);
+            stack.setTagCompound(compound);
+        }
+    }
+
+
+    public void fire(ItemStack stack, World world, EntityPlayer player, int charge) {
 
         ArrowLooseEvent event = new ArrowLooseEvent(player, stack, charge);
         MinecraftForge.EVENT_BUS.post(event);
@@ -73,11 +92,11 @@ public class ItemGaussGun extends ItemEnergyContainer {
         boolean flag = player.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, stack) > 0;
 
         int energyStored = getEnergyStored(stack);
-        int energyUsed = charge * 2560;
+        int energyUsed = (int) (charge * (damageMultiplier*1000));
 
         if (energyUsed > energyStored) {
             energyUsed = energyStored;
-            charge = energyUsed / 2560;
+            charge = (int) (energyUsed / (damageMultiplier * 1000));
         }
 
         if (charge == 0) {
@@ -92,15 +111,13 @@ public class ItemGaussGun extends ItemEnergyContainer {
             EntityBolt entityBolt = new EntityBolt(world, player, f);
 
             if (!stack.hasTagCompound()) {
-                stack.stackTagCompound = new NBTTagCompound();
                 writeDefValuesToNBT(stack);
             }
 
             NBTTagCompound compound = stack.getTagCompound();
-            float cfg = CfgFloatValues.GAUSS_FUN_DAMAGE.getValue();
-            double multiplier = compound.getDouble("multiplier") * cfg;
+            double multiplier = compound.getDouble("multiplier") * this.cfgMultiplier;
 
-            entityBolt.setDamage(Math.min(1000, multiplier * charge) / 2);
+            entityBolt.setDamage(Math.min(1000, (multiplier * charge) / 5 / 2));
 
             stack.damageItem(1, player);
             world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
@@ -124,20 +141,26 @@ public class ItemGaussGun extends ItemEnergyContainer {
 
     @Override
     public EnumAction getItemUseAction(ItemStack p_77661_1_) {
-        return EnumAction.bow;
+        return EnumAction.none;
     }
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-        ArrowNockEvent event = new ArrowNockEvent(player, stack);
-        MinecraftForge.EVENT_BUS.post(event);
-        if (event.isCanceled()) {
-            return event.result;
+        if (!stack.hasTagCompound()) {
+            writeDefValuesToNBT(stack);
         }
 
-        if (player.capabilities.isCreativeMode || player.inventory.hasItem(ElectricalEngineering.bolt)) {
-            player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
+        NBTTagCompound compound = stack.getTagCompound();
+        boolean charging = compound.getBoolean("charging");
+
+        if (charging) {
+            int chargeTicks = compound.getInteger("chargeTicks");
+            this.fire(stack, world, player, chargeTicks);
+            compound.setInteger("chargeTicks", 0);
         }
+
+        compound.setBoolean("charging", !charging);
+        stack.setTagCompound(compound);
 
         return stack;
     }
@@ -162,9 +185,8 @@ public class ItemGaussGun extends ItemEnergyContainer {
                 writeDefValuesToNBT(stack);
             }
             NBTTagCompound compound = stack.getTagCompound();
-            float cfg = CfgFloatValues.GAUSS_FUN_DAMAGE.getValue();
-            float multiplier = compound.getFloat("multiplier") * cfg;
-            float dmg = (multiplier * 200.0f);
+            float multiplier = compound.getFloat("multiplier") * this.cfgMultiplier;
+            float dmg = Math.round((multiplier * maxCharge) / 5);
             String info = "";
             if (dmg >= 40) {
                 info += EnumChatFormatting.DARK_RED;
@@ -176,14 +198,15 @@ public class ItemGaussGun extends ItemEnergyContainer {
                 info += EnumChatFormatting.GREEN;
                 info += dmg;
             } else {
+                info += EnumChatFormatting.AQUA;
                 info += dmg;
             }
 
-            list.add("Damage after 10s: " + info);
+            list.add("Damage when fully charged: " + info);
 
             int windings = compound.getInteger("windings");
             info = "";
-            if (windings > 128) {
+            if (windings > 512) {
                 info += EnumChatFormatting.OBFUSCATED;
                 info += windings;
                 info += EnumChatFormatting.DARK_GRAY;
@@ -197,6 +220,10 @@ public class ItemGaussGun extends ItemEnergyContainer {
             int energy = compound.getInteger("Energy");
 
             list.add("Power: " + energy + "/" + "5000000 RF");
+
+            int charge = compound.getInteger("chargeTicks");
+
+            list.add("Charge: " + charge + "/" + maxCharge);
         } else {
             list.add(EnumChatFormatting.GRAY + "Press SHIFT for more info");
         }
@@ -207,9 +234,11 @@ public class ItemGaussGun extends ItemEnergyContainer {
         if (compound == null) {
             compound = new NBTTagCompound();
         }
-        compound.setInteger("windings", coilWindings);
+        compound.setInteger("windings", maxCoilWindings);
         compound.setFloat("multiplier", damageMultiplier);
         compound.setInteger("Energy", 0);
+        compound.setBoolean("charging", false);
+        compound.setInteger("chargeTicks", 0);
         stack.setTagCompound(compound);
     }
 
