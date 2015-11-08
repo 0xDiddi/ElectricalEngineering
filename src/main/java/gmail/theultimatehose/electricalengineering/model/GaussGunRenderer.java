@@ -1,5 +1,6 @@
 package gmail.theultimatehose.electricalengineering.model;
 
+import gmail.theultimatehose.electricalengineering.Util;
 import gmail.theultimatehose.electricalengineering.item.ItemGaussGun;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
@@ -44,7 +45,7 @@ public class GaussGunRenderer implements IItemRenderer {
         switch (type) {
             case EQUIPPED:
                 GL11.glPushMatrix();
-                Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("electricalengineering", "textures/model/GaussGun.png"));
+                Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Util.MOD_ID_LOWER, "textures/model/GaussGun.png"));
 
                 scale = 1f;
 

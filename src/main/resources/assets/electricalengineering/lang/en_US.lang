@@ -28,5 +28,6 @@ item.ElectricalEngineering_GaussGun.name=Gauss Gun
 tile.ElectricalEngineering_MachineSolder.name=Soldering Machine
 tile.ElectricalEngineering_MachineMAD.name=MAD (Mechanical Arm Device)
 tile.ElectricalEngineering_MachineWinder.name=Coil Winder
+tile.ElectricalEngineering_MachinePcbFrame.name=Pcb Frame
 
 tile.ElectricalEngineering_MachineBurnt.name=Burnt Machine

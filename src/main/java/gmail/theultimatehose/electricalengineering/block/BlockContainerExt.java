@@ -1,4 +1,4 @@
-package gmail.theultimatehose.electricalengineering.blocks;
+package gmail.theultimatehose.electricalengineering.block;
 
 import gmail.theultimatehose.electricalengineering.tile.TileEntityInventoryBase;
 import net.minecraft.block.Block;

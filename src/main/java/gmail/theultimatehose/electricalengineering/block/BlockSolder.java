@@ -1,4 +1,4 @@
-package gmail.theultimatehose.electricalengineering.blocks;
+package gmail.theultimatehose.electricalengineering.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

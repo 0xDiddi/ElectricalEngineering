@@ -8,7 +8,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import gmail.theultimatehose.electricalengineering.blocks.*;
+import gmail.theultimatehose.electricalengineering.block.*;
 import gmail.theultimatehose.electricalengineering.config.CfgHandler;
 import gmail.theultimatehose.electricalengineering.entity.EntityBolt;
 import gmail.theultimatehose.electricalengineering.event.CraftEvent;
@@ -20,6 +20,7 @@ import gmail.theultimatehose.electricalengineering.proxy.CommonProxy;
 import gmail.theultimatehose.electricalengineering.recipe.SolderRecipe;
 import gmail.theultimatehose.electricalengineering.tile.TileEntityCoilWinder;
 import gmail.theultimatehose.electricalengineering.tile.TileEntityMAD;
+import gmail.theultimatehose.electricalengineering.tile.TileEntityPcbFrame;
 import gmail.theultimatehose.electricalengineering.tile.TileEntitySolder;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -88,6 +89,7 @@ public class ElectricalEngineering {
         GameRegistry.registerTileEntity(TileEntitySolder.class, Util.MOD_ID_LOWER + ":tileEntitySolder");
         GameRegistry.registerTileEntity(TileEntityMAD.class, Util.MOD_ID_LOWER + ":tileEntityMAD");
         GameRegistry.registerTileEntity(TileEntityCoilWinder.class, Util.MOD_ID_LOWER + ":tileEntityWinder");
+        GameRegistry.registerTileEntity(TileEntityPcbFrame.class, Util.MOD_ID_LOWER + ":tileEntityPcbFrame");
 
         EntityRegistry.registerModEntity(EntityBolt.class, "Bolt", EntityRegistry.findGlobalUniqueEntityId(), instance, 64, 80000, true);
 

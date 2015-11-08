@@ -2,7 +2,7 @@ package gmail.theultimatehose.electricalengineering.event;
 
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import gmail.theultimatehose.electricalengineering.blocks.BlockManager;
+import gmail.theultimatehose.electricalengineering.block.BlockManager;
 import gmail.theultimatehose.electricalengineering.config.values.CfgFloatValues;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 

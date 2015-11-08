@@ -12,7 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityInventoryBase extends TileEntity implements IInventory {
 
-    public ItemStack slots[];
+    public ItemStack slots[] = new ItemStack[0];
 
     @Override
     public Packet getDescriptionPacket() {

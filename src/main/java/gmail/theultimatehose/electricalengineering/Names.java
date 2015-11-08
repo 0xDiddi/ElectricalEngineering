@@ -23,11 +23,15 @@ public class Names {
     public static final String TRANSFORMER = "Transformer";
     public static final String BOLT = "Bolt";
 
+    public static final String MODULE_REDSTONE_ANTENNA = "ModuleRedstoneAntenna";
+    public static final String MODULE_REMOTE_ANTENNA = "ModuleRemoteAntenna";
+
     public static final String GAUSS_GUN = "GaussGun";
 
     public static final String MACHINE_SOLDER = "MachineSolder";
     public static final String MACHINE_MAD = "MachineMAD";
     public static final String MACHINE_WINDER = "MachineWinder";
+    public static final String MACHINE_PCB_FRAME = "MachinePcbFrame";
 
     public static final String MACHINE_BURNT = "MachineBurnt";
 }

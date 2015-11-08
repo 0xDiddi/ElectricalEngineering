@@ -1,7 +1,7 @@
 package gmail.theultimatehose.electricalengineering;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import gmail.theultimatehose.electricalengineering.blocks.BlockManager;
+import gmail.theultimatehose.electricalengineering.block.BlockManager;
 import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
