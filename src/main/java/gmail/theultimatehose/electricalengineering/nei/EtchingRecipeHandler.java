@@ -4,9 +4,9 @@ import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
 import gmail.theultimatehose.electricalengineering.Util;
 import gmail.theultimatehose.electricalengineering.gui.GUIMAD;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
@@ -27,7 +27,7 @@ public class EtchingRecipeHandler extends TemplateRecipeHandler {
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals(this.getName()) && getClass() == EtchingRecipeHandler.class) {
-            arecipes.add(new CachedEtching(new ItemStack(ElectricalEngineering.pcbUnetched), new ItemStack(ElectricalEngineering.pcbEtched), new ItemStack(ElectricalEngineering.bucketAcid)));
+            arecipes.add(new CachedEtching(new ItemStack(ItemManager.pcbUnetched), new ItemStack(ItemManager.pcbEtched), new ItemStack(ItemManager.bucketAcid)));
         } else {
             super.loadCraftingRecipes(outputId, results);
         }
@@ -35,15 +35,15 @@ public class EtchingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
-        if (result.getItem() == ElectricalEngineering.pcbEtched) {
-            arecipes.add(new CachedEtching(new ItemStack(ElectricalEngineering.pcbUnetched), new ItemStack(ElectricalEngineering.pcbEtched), new ItemStack(ElectricalEngineering.bucketAcid)));
+        if (result.getItem() == ItemManager.pcbEtched) {
+            arecipes.add(new CachedEtching(new ItemStack(ItemManager.pcbUnetched), new ItemStack(ItemManager.pcbEtched), new ItemStack(ItemManager.bucketAcid)));
         }
     }
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        if (ingredient.getItem() == ElectricalEngineering.bucketAcid || ingredient.getItem() == ElectricalEngineering.pcbUnetched) {
-            arecipes.add(new CachedEtching(new ItemStack(ElectricalEngineering.pcbUnetched), new ItemStack(ElectricalEngineering.pcbEtched), new ItemStack(ElectricalEngineering.bucketAcid)));
+        if (ingredient.getItem() == ItemManager.bucketAcid || ingredient.getItem() == ItemManager.pcbUnetched) {
+            arecipes.add(new CachedEtching(new ItemStack(ItemManager.pcbUnetched), new ItemStack(ItemManager.pcbEtched), new ItemStack(ItemManager.bucketAcid)));
         }
     }
 

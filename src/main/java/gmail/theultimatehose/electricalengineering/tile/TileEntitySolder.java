@@ -4,7 +4,7 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import gmail.theultimatehose.electricalengineering.network.sync.IPacketSyncerToClient;
 import gmail.theultimatehose.electricalengineering.network.sync.PacketSyncerToClient;
 import gmail.theultimatehose.electricalengineering.recipe.SolderRecipe;
@@ -84,18 +84,18 @@ public class TileEntitySolder extends TileEntityInventoryBase implements IEnergy
         if (slots[SLOT_PCB_IN] != null) {
             ItemStack in = slots[SLOT_PCB_IN];
             ItemStack out = slots[SLOT_PCB_OUT];
-            if (in.getItem().equals(ElectricalEngineering.pcbLVBurnt)) {
+            if (in.getItem().equals(ItemManager.pcbLVBurnt)) {
                 if (out == null) {
                     return true;
-                } else if (out.getItem().equals(ElectricalEngineering.pcbScrapLV)) {
+                } else if (out.getItem().equals(ItemManager.pcbScrapLV)) {
                     if (out.stackSize + 1 < out.getMaxStackSize()) {
                         return true;
                     }
                 }
-            } else if (in.getItem().equals(ElectricalEngineering.pcbHVBurnt)) {
+            } else if (in.getItem().equals(ItemManager.pcbHVBurnt)) {
                 if (out == null) {
                     return true;
-                } else if (out.getItem().equals(ElectricalEngineering.pcbScrapHV)) {
+                } else if (out.getItem().equals(ItemManager.pcbScrapHV)) {
                     if (out.stackSize + 1 < out.getMaxStackSize()) {
                         return true;
                     }
@@ -108,12 +108,12 @@ public class TileEntitySolder extends TileEntityInventoryBase implements IEnergy
     private void finishDesolder() {
         ItemStack in = slots[SLOT_PCB_IN];
         ItemStack out = slots[SLOT_PCB_OUT];
-        if (in.getItem().equals(ElectricalEngineering.pcbLVBurnt)) {
-            if (out == null) slots[SLOT_PCB_OUT] = new ItemStack(ElectricalEngineering.pcbScrapLV, 1);
-            else if (out.getItem().equals(ElectricalEngineering.pcbScrapLV)) slots[SLOT_PCB_OUT].stackSize++;
-        } else if (in.getItem().equals(ElectricalEngineering.pcbHVBurnt)) {
-            if (out == null) slots[SLOT_PCB_OUT] = new ItemStack(ElectricalEngineering.pcbScrapHV, 1);
-            else if (out.getItem().equals(ElectricalEngineering.pcbScrapHV)) slots[SLOT_PCB_OUT].stackSize++;
+        if (in.getItem().equals(ItemManager.pcbLVBurnt)) {
+            if (out == null) slots[SLOT_PCB_OUT] = new ItemStack(ItemManager.pcbScrapLV, 1);
+            else if (out.getItem().equals(ItemManager.pcbScrapLV)) slots[SLOT_PCB_OUT].stackSize++;
+        } else if (in.getItem().equals(ItemManager.pcbHVBurnt)) {
+            if (out == null) slots[SLOT_PCB_OUT] = new ItemStack(ItemManager.pcbScrapHV, 1);
+            else if (out.getItem().equals(ItemManager.pcbScrapHV)) slots[SLOT_PCB_OUT].stackSize++;
         }
         slots[SLOT_PCB_IN].stackSize--;
         if (slots[SLOT_PCB_IN].stackSize <= 0) slots[SLOT_PCB_IN] = null;
@@ -149,7 +149,7 @@ public class TileEntitySolder extends TileEntityInventoryBase implements IEnergy
             out.stackSize++;
         }
 
-        if (slots[SLOT_CRAFT_RES].getItem() == ElectricalEngineering.gaussGun) {
+        if (slots[SLOT_CRAFT_RES].getItem() == ItemManager.gaussGun) {
             ItemStack coil = slots[SLOT_CRAFT_1].copy();
             int windings = 2048 - coil.getItemDamage();
             double i = windings / 8;
@@ -211,7 +211,7 @@ public class TileEntitySolder extends TileEntityInventoryBase implements IEnergy
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
-        return slot == SLOT_PCB_IN && (stack.getItem() == ElectricalEngineering.pcbHVBurnt || stack.getItem() == ElectricalEngineering.pcbLVBurnt);
+        return slot == SLOT_PCB_IN && (stack.getItem() == ItemManager.pcbHVBurnt || stack.getItem() == ItemManager.pcbLVBurnt);
     }
 
     @Override

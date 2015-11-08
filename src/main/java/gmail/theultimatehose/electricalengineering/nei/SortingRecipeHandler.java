@@ -4,9 +4,9 @@ import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
 import gmail.theultimatehose.electricalengineering.Util;
 import gmail.theultimatehose.electricalengineering.gui.GUIMAD;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -31,13 +31,13 @@ public class SortingRecipeHandler extends TemplateRecipeHandler {
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals(this.getName()) && getClass() == SortingRecipeHandler.class) {
             ArrayList<ItemStack> list = new ArrayList<ItemStack>();
-            list.add(new ItemStack(ElectricalEngineering.capacitorLV));
-            list.add(new ItemStack(ElectricalEngineering.transistor));
-            list.add(new ItemStack(ElectricalEngineering.resistor));
-            arecipes.add(new CachedSorting(new ItemStack(ElectricalEngineering.pcbScrapLV), list, false));
-            list.add(new ItemStack(ElectricalEngineering.capacitorHV));
-            list.add(new ItemStack(ElectricalEngineering.transformer));
-            arecipes.add(new CachedSorting(new ItemStack(ElectricalEngineering.pcbScrapHV), list, true));
+            list.add(new ItemStack(ItemManager.capacitorLV));
+            list.add(new ItemStack(ItemManager.transistor));
+            list.add(new ItemStack(ItemManager.resistor));
+            arecipes.add(new CachedSorting(new ItemStack(ItemManager.pcbScrapLV), list, false));
+            list.add(new ItemStack(ItemManager.capacitorHV));
+            list.add(new ItemStack(ItemManager.transformer));
+            arecipes.add(new CachedSorting(new ItemStack(ItemManager.pcbScrapHV), list, true));
         } else {
             super.loadCraftingRecipes(outputId, results);
         }
@@ -46,18 +46,18 @@ public class SortingRecipeHandler extends TemplateRecipeHandler {
     @Override
     public void loadCraftingRecipes(ItemStack result) {
         ArrayList<ItemStack> list = new ArrayList<ItemStack>();
-        list.add(new ItemStack(ElectricalEngineering.capacitorLV));
-        list.add(new ItemStack(ElectricalEngineering.transistor));
-        list.add(new ItemStack(ElectricalEngineering.resistor));
-        if (result.getItem() == ElectricalEngineering.capacitorLV || result.getItem() == ElectricalEngineering.transistor || result.getItem() == ElectricalEngineering.resistor) {
-            arecipes.add(new CachedSorting(new ItemStack(ElectricalEngineering.pcbScrapLV), list, false));
-            list.add(new ItemStack(ElectricalEngineering.capacitorHV));
-            list.add(new ItemStack(ElectricalEngineering.transformer));
-            arecipes.add(new CachedSorting(new ItemStack(ElectricalEngineering.pcbScrapHV), list, true));
-        } else if (result.getItem() == ElectricalEngineering.capacitorHV || result.getItem() == ElectricalEngineering.transformer) {
-            list.add(new ItemStack(ElectricalEngineering.capacitorHV));
-            list.add(new ItemStack(ElectricalEngineering.transformer));
-            arecipes.add(new CachedSorting(new ItemStack(ElectricalEngineering.pcbScrapHV), list, true));
+        list.add(new ItemStack(ItemManager.capacitorLV));
+        list.add(new ItemStack(ItemManager.transistor));
+        list.add(new ItemStack(ItemManager.resistor));
+        if (result.getItem() == ItemManager.capacitorLV || result.getItem() == ItemManager.transistor || result.getItem() == ItemManager.resistor) {
+            arecipes.add(new CachedSorting(new ItemStack(ItemManager.pcbScrapLV), list, false));
+            list.add(new ItemStack(ItemManager.capacitorHV));
+            list.add(new ItemStack(ItemManager.transformer));
+            arecipes.add(new CachedSorting(new ItemStack(ItemManager.pcbScrapHV), list, true));
+        } else if (result.getItem() == ItemManager.capacitorHV || result.getItem() == ItemManager.transformer) {
+            list.add(new ItemStack(ItemManager.capacitorHV));
+            list.add(new ItemStack(ItemManager.transformer));
+            arecipes.add(new CachedSorting(new ItemStack(ItemManager.pcbScrapHV), list, true));
         }
     }
 
@@ -65,15 +65,15 @@ public class SortingRecipeHandler extends TemplateRecipeHandler {
     public void loadUsageRecipes(ItemStack ingredient) {
         Item in = ingredient.getItem();
         ArrayList<ItemStack> list = new ArrayList<ItemStack>();
-        list.add(new ItemStack(ElectricalEngineering.capacitorLV));
-        list.add(new ItemStack(ElectricalEngineering.transistor));
-        list.add(new ItemStack(ElectricalEngineering.resistor));
-        if (in == ElectricalEngineering.pcbScrapLV) {
-            arecipes.add(new CachedSorting(new ItemStack(ElectricalEngineering.pcbScrapLV), list, false));
-        } else if (in == ElectricalEngineering.pcbScrapHV) {
-            list.add(new ItemStack(ElectricalEngineering.capacitorHV));
-            list.add(new ItemStack(ElectricalEngineering.transformer));
-            arecipes.add(new CachedSorting(new ItemStack(ElectricalEngineering.pcbScrapHV), list, true));
+        list.add(new ItemStack(ItemManager.capacitorLV));
+        list.add(new ItemStack(ItemManager.transistor));
+        list.add(new ItemStack(ItemManager.resistor));
+        if (in == ItemManager.pcbScrapLV) {
+            arecipes.add(new CachedSorting(new ItemStack(ItemManager.pcbScrapLV), list, false));
+        } else if (in == ItemManager.pcbScrapHV) {
+            list.add(new ItemStack(ItemManager.capacitorHV));
+            list.add(new ItemStack(ItemManager.transformer));
+            arecipes.add(new CachedSorting(new ItemStack(ItemManager.pcbScrapHV), list, true));
         }
     }
 
@@ -86,7 +86,7 @@ public class SortingRecipeHandler extends TemplateRecipeHandler {
     public void drawExtras(int recipe) {
         drawProgressBar(3, 21, 176, 0, 20, 30, 100, 1);
         CachedSorting sort = (CachedSorting) this.arecipes.get(recipe);
-        drawChanceString(sort.getIngredient().item.getItem() == ElectricalEngineering.pcbScrapHV);
+        drawChanceString(sort.getIngredient().item.getItem() == ItemManager.pcbScrapHV);
     }
 
     @Override

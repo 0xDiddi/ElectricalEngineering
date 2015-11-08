@@ -1,7 +1,7 @@
 package gmail.theultimatehose.electricalengineering.recipe;
 
 
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -20,9 +20,9 @@ public class SolderRecipe extends ShapedOreRecipe {
 
     public static void init() {
         recipes = new ArrayList<SolderRecipe>(2);
-        recipes.add(new SolderRecipe(new ItemStack(ElectricalEngineering.pcbControl, 1), "RCT", "TRC", "NPN", 'N', "nuggetTin", 'P', ElectricalEngineering.pcbEtched, 'R', ElectricalEngineering.resistor, 'T', ElectricalEngineering.transistor, 'C', ElectricalEngineering.capacitorLV));
-        recipes.add(new SolderRecipe(new ItemStack(ElectricalEngineering.pcbVoltReg, 1), "FHT", "TRC", "NPN", 'N', "nuggetTin", 'P', ElectricalEngineering.pcbEtched, 'R', ElectricalEngineering.resistor, 'T', ElectricalEngineering.transistor, 'C', ElectricalEngineering.capacitorLV, 'F', ElectricalEngineering.transformer, 'H', ElectricalEngineering.capacitorHV));
-        recipes.add(new SolderRecipe(new ItemStack(ElectricalEngineering.gaussGun, 1), "TRB", " LC", "  I", 'T', new ItemStack(ElectricalEngineering.coil, 1, OreDictionary.WILDCARD_VALUE), 'R', ElectricalEngineering.pcbVoltReg, 'B', Blocks.iron_block, 'L', Blocks.lever, 'C', ElectricalEngineering.pcbControl, 'I', Items.iron_ingot));
+        recipes.add(new SolderRecipe(new ItemStack(ItemManager.pcbControl, 1), "RCT", "TRC", "NPN", 'N', "nuggetTin", 'P', ItemManager.pcbEtched, 'R', ItemManager.resistor, 'T', ItemManager.transistor, 'C', ItemManager.capacitorLV));
+        recipes.add(new SolderRecipe(new ItemStack(ItemManager.pcbVoltReg, 1), "FHT", "TRC", "NPN", 'N', "nuggetTin", 'P', ItemManager.pcbEtched, 'R', ItemManager.resistor, 'T', ItemManager.transistor, 'C', ItemManager.capacitorLV, 'F', ItemManager.transformer, 'H', ItemManager.capacitorHV));
+        recipes.add(new SolderRecipe(new ItemStack(ItemManager.gaussGun, 1), "TRB", " LC", "  I", 'T', new ItemStack(ItemManager.coil, 1, OreDictionary.WILDCARD_VALUE), 'R', ItemManager.pcbVoltReg, 'B', Blocks.iron_block, 'L', Blocks.lever, 'C', ItemManager.pcbControl, 'I', Items.iron_ingot));
     }
 
     public static SolderRecipe checkMatch(ItemStack[] matrix) {

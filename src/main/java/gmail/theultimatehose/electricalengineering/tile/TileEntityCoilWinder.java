@@ -4,7 +4,7 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import gmail.theultimatehose.electricalengineering.network.sync.IPacketSyncerToClient;
 import gmail.theultimatehose.electricalengineering.network.sync.PacketSyncerToClient;
 import net.minecraft.entity.player.EntityPlayer;
@@ -59,7 +59,7 @@ public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEn
             }
 
             if (slots[SLOT_WIRE_IN] != null) {
-                if (slots[SLOT_WIRE_IN].getItem() == ElectricalEngineering.wireCopper && currCoilAmount + 1 <= coilAmount) {
+                if (slots[SLOT_WIRE_IN].getItem() == ItemManager.wireCopper && currCoilAmount + 1 <= coilAmount) {
                     currCoilAmount++;
                     slots[SLOT_WIRE_IN].stackSize--;
                     if (slots[SLOT_WIRE_IN].stackSize <= 0) {
@@ -74,7 +74,7 @@ public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEn
     public boolean canWind() {
 
         if (slots[SLOT_COIL_IN] != null) {
-            if (slots[SLOT_COIL_IN].getItem() == ElectricalEngineering.coil && currCoilAmount > 0) {
+            if (slots[SLOT_COIL_IN].getItem() == ItemManager.coil && currCoilAmount > 0) {
                 if (slots[SLOT_COIL_OUT] == null) {
                     return true;
                 }
@@ -127,10 +127,10 @@ public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEn
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
-        if (slot == SLOT_WIRE_IN && stack.getItem() == ElectricalEngineering.wireCopper) {
+        if (slot == SLOT_WIRE_IN && stack.getItem() == ItemManager.wireCopper) {
             return true;
         }
-        if (slot == SLOT_COIL_IN && stack.getItem() == ElectricalEngineering.coil) {
+        if (slot == SLOT_COIL_IN && stack.getItem() == ItemManager.coil) {
             return true;
         }
         return false;

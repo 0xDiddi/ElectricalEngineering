@@ -4,9 +4,9 @@ import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
 import gmail.theultimatehose.electricalengineering.Util;
 import gmail.theultimatehose.electricalengineering.gui.GUICoilWinder;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -28,7 +28,7 @@ public class CoilWinderRecipeHandler extends TemplateRecipeHandler {
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals(this.getName()) && getClass() == CoilWinderRecipeHandler.class) {
-            arecipes.add(new CachedWinding(new ItemStack(ElectricalEngineering.coil, 1, 2048), new ItemStack(ElectricalEngineering.coil, 1, 0), new ItemStack(ElectricalEngineering.wireCopper)));
+            arecipes.add(new CachedWinding(new ItemStack(ItemManager.coil, 1, 2048), new ItemStack(ItemManager.coil, 1, 0), new ItemStack(ItemManager.wireCopper)));
         } else {
             super.loadCraftingRecipes(outputId, results);
         }
@@ -37,16 +37,16 @@ public class CoilWinderRecipeHandler extends TemplateRecipeHandler {
     @Override
     public void loadCraftingRecipes(ItemStack result) {
         Item item = result.getItem();
-        if (item == ElectricalEngineering.coil) {
-            arecipes.add(new CachedWinding(new ItemStack(ElectricalEngineering.coil, 1, 2048), new ItemStack(ElectricalEngineering.coil, 1, 0), new ItemStack(ElectricalEngineering.wireCopper)));
+        if (item == ItemManager.coil) {
+            arecipes.add(new CachedWinding(new ItemStack(ItemManager.coil, 1, 2048), new ItemStack(ItemManager.coil, 1, 0), new ItemStack(ItemManager.wireCopper)));
         }
     }
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
         Item item = ingredient.getItem();
-        if (item == ElectricalEngineering.wireCopper || item == ElectricalEngineering.coil) {
-            arecipes.add(new CachedWinding(new ItemStack(ElectricalEngineering.coil, 1, 2048), new ItemStack(ElectricalEngineering.coil, 1, 0), new ItemStack(ElectricalEngineering.wireCopper)));
+        if (item == ItemManager.wireCopper || item == ItemManager.coil) {
+            arecipes.add(new CachedWinding(new ItemStack(ItemManager.coil, 1, 2048), new ItemStack(ItemManager.coil, 1, 0), new ItemStack(ItemManager.wireCopper)));
         }
     }
 
@@ -71,7 +71,7 @@ public class CoilWinderRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return "electricalengineering:textures/gui/guiCoilWinder.png";
+        return "ItemManager:textures/gui/guiCoilWinder.png";
     }
 
     public String getName() {

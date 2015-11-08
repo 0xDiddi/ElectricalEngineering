@@ -1,7 +1,7 @@
 package gmail.theultimatehose.electricalengineering.blocks;
 
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
 import gmail.theultimatehose.electricalengineering.config.values.CfgFloatValues;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -35,8 +35,8 @@ public class BlockBurntMachine extends Block {
         int amountLV = Math.max(0, (rand.nextInt(7) - chanceLV) + fortune);
         int amountHV = Math.max(0, (rand.nextInt(11) - chanceHV) + fortune);
 
-        list.add(new ItemStack(ElectricalEngineering.pcbLVBurnt, amountLV));
-        list.add(new ItemStack(ElectricalEngineering.pcbHVBurnt, amountHV));
+        list.add(new ItemStack(ItemManager.pcbLVBurnt, amountLV));
+        list.add(new ItemStack(ItemManager.pcbHVBurnt, amountHV));
 
         return list;
     }

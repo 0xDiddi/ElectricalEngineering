@@ -1,6 +1,6 @@
 package gmail.theultimatehose.electricalengineering.creativetab;
 
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
@@ -13,5 +13,5 @@ public class CreativeTabGeneral extends CreativeTabs {
     }
 
     @Override
-    public Item getTabIconItem() { return ElectricalEngineering.capacitorHV; }
+    public Item getTabIconItem() { return ItemManager.capacitorHV; }
 }

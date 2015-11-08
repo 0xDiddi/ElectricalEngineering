@@ -1,6 +1,6 @@
 package gmail.theultimatehose.electricalengineering.container;
 
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import gmail.theultimatehose.electricalengineering.tile.TileEntityMAD;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -67,15 +67,15 @@ public class ContainerMAD extends Container {
             } else {
                 //From Inventory to Machine
                 Item item = stack.getItem();
-                if (item == ElectricalEngineering.pcbScrapLV || item == ElectricalEngineering.pcbScrapHV) {
+                if (item == ItemManager.pcbScrapLV || item == ItemManager.pcbScrapHV) {
                     if (!this.mergeItemStack(stack1, 0, 1, false)) {
                         return null;
                     }
-                } else if (item == ElectricalEngineering.pcbUnetched) {
+                } else if (item == ItemManager.pcbUnetched) {
                     if (!this.mergeItemStack(stack1, 6, 7, false)) {
                         return null;
                     }
-                } else if (item == ElectricalEngineering.bucketAcid) {
+                } else if (item == ItemManager.bucketAcid) {
                     if (!this.mergeItemStack(stack1, 8, 9, false)) {
                         return null;
                     }

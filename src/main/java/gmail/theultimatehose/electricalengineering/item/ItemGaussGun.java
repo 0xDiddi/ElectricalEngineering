@@ -3,7 +3,6 @@ package gmail.theultimatehose.electricalengineering.item;
 import cofh.api.energy.ItemEnergyContainer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
 import gmail.theultimatehose.electricalengineering.config.values.CfgFloatValues;
 import gmail.theultimatehose.electricalengineering.entity.EntityBolt;
 import net.minecraft.client.gui.GuiScreen;
@@ -103,7 +102,7 @@ public class ItemGaussGun extends ItemEnergyContainer {
             return;
         }
 
-        if (flag || player.inventory.hasItem(ElectricalEngineering.bolt)) {
+        if (flag || player.inventory.hasItem(ItemManager.bolt)) {
             float f = charge/12;
 
             this.setEnergy(stack, energyStored - energyUsed);
@@ -125,7 +124,7 @@ public class ItemGaussGun extends ItemEnergyContainer {
             if (flag) {
                 entityBolt.canBePickedUp = 2;
             } else {
-                player.inventory.consumeInventoryItem(ElectricalEngineering.bolt);
+                player.inventory.consumeInventoryItem(ItemManager.bolt);
             }
 
             if (!world.isRemote) {

@@ -1,6 +1,6 @@
 package gmail.theultimatehose.electricalengineering.container;
 
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import gmail.theultimatehose.electricalengineering.tile.TileEntityCoilWinder;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -57,11 +57,11 @@ public class ContainerCoilWinder extends Container {
             } else {
                 //From Inventory to Machine
                 Item item = stack.getItem();
-                if (item == ElectricalEngineering.wireCopper) {
+                if (item == ItemManager.wireCopper) {
                     if (!this.mergeItemStack(stack1, 0, 1, false)) {
                         return null;
                     }
-                } else if (item == ElectricalEngineering.coil) {
+                } else if (item == ItemManager.coil) {
                     if (!this.mergeItemStack(stack1, 1, 2, false)) {
                         return null;
                     }

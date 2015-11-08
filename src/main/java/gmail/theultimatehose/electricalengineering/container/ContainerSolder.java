@@ -1,6 +1,6 @@
 package gmail.theultimatehose.electricalengineering.container;
 
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import gmail.theultimatehose.electricalengineering.recipe.SolderRecipe;
 import gmail.theultimatehose.electricalengineering.tile.TileEntitySolder;
 import net.minecraft.entity.player.EntityPlayer;
@@ -85,7 +85,7 @@ public class ContainerSolder extends Container {
             } else {
                 //From Inventory to Machine
                 Item item = stack.getItem();
-                if (item == ElectricalEngineering.pcbLVBurnt || item == ElectricalEngineering.pcbHVBurnt) {
+                if (item == ItemManager.pcbLVBurnt || item == ItemManager.pcbHVBurnt) {
                     if (!this.mergeItemStack(stack1, 0, 1, false)) {
                         return null;
                     }

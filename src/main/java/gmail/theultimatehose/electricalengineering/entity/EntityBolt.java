@@ -2,7 +2,7 @@ package gmail.theultimatehose.electricalengineering.entity;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -289,7 +289,7 @@ public class EntityBolt extends Entity implements IProjectile {
                                 if (entitylivingbase instanceof EntityPlayer) {
                                     EntityPlayer player = (EntityPlayer) entitylivingbase;
                                     InventoryPlayer inv = player.inventory;
-                                    inv.addItemStackToInventory(new ItemStack(ElectricalEngineering.bolt, 1));
+                                    inv.addItemStackToInventory(new ItemStack(ItemManager.bolt, 1));
                                 }
                             }
 
@@ -450,7 +450,7 @@ public class EntityBolt extends Entity implements IProjectile {
         if (!this.worldObj.isRemote && this.inGround && this.arrowShake <= 0) {
             boolean flag = this.canBePickedUp == 1 || this.canBePickedUp == 2 && p_70100_1_.capabilities.isCreativeMode;
 
-            if (this.canBePickedUp == 1 && !p_70100_1_.inventory.addItemStackToInventory(new ItemStack(ElectricalEngineering.bolt, 1))) {
+            if (this.canBePickedUp == 1 && !p_70100_1_.inventory.addItemStackToInventory(new ItemStack(ItemManager.bolt, 1))) {
                 flag = false;
             }
 

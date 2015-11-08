@@ -2,7 +2,7 @@ package gmail.theultimatehose.electricalengineering.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import gmail.theultimatehose.electricalengineering.network.sync.IPacketSyncerToClient;
 import gmail.theultimatehose.electricalengineering.network.sync.PacketSyncerToClient;
 import net.minecraft.entity.player.EntityPlayer;
@@ -82,7 +82,7 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
             }
 
             if (slots[SLOT_ACID_IN] != null) {
-                if (slots[SLOT_ACID_IN].getItem() == ElectricalEngineering.bucketAcid && currAcidAmount + 1000 <= acidAmount) {
+                if (slots[SLOT_ACID_IN].getItem() == ItemManager.bucketAcid && currAcidAmount + 1000 <= acidAmount) {
                     currAcidAmount += 1000;
                     slots[SLOT_ACID_IN] = null;
                     if (slots[SLOT_BUCKET_OUT] == null) {
@@ -106,11 +106,11 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
 
     private boolean canSort() {
         if (slots[SLOT_SCRAB_IN] != null) {
-            if (slots[SLOT_SCRAB_IN].getItem() == ElectricalEngineering.pcbScrapLV || slots[SLOT_SCRAB_IN].getItem() == ElectricalEngineering.pcbScrapHV) {
+            if (slots[SLOT_SCRAB_IN].getItem() == ItemManager.pcbScrapLV || slots[SLOT_SCRAB_IN].getItem() == ItemManager.pcbScrapHV) {
                 if (canSlotHandle(nextOut, 1)) {
                     return true;
                 } else {
-                    generateNextOutput(slots[SLOT_SCRAB_IN].getItem() == ElectricalEngineering.pcbScrapHV);
+                    generateNextOutput(slots[SLOT_SCRAB_IN].getItem() == ItemManager.pcbScrapHV);
                     return false;
                 }
             }
@@ -122,19 +122,19 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
         if (slots[nextOut] == null) {
             switch (nextOut) {
                 case SLOT_CAPACITOR_LV:
-                    slots[nextOut] = new ItemStack(ElectricalEngineering.capacitorLV, 1);
+                    slots[nextOut] = new ItemStack(ItemManager.capacitorLV, 1);
                     break;
                 case SLOT_CAPACITOR_HV:
-                    slots[nextOut] = new ItemStack(ElectricalEngineering.capacitorHV, 1);
+                    slots[nextOut] = new ItemStack(ItemManager.capacitorHV, 1);
                     break;
                 case SLOT_TRANSISTOR:
-                    slots[nextOut] = new ItemStack(ElectricalEngineering.transistor, 1);
+                    slots[nextOut] = new ItemStack(ItemManager.transistor, 1);
                     break;
                 case SLOT_RESISTOR:
-                    slots[nextOut] = new ItemStack(ElectricalEngineering.resistor, 1);
+                    slots[nextOut] = new ItemStack(ItemManager.resistor, 1);
                     break;
                 case SLOT_TRANSFORMER:
-                    slots[nextOut] = new ItemStack(ElectricalEngineering.transformer, 1);
+                    slots[nextOut] = new ItemStack(ItemManager.transformer, 1);
                     break;
             }
         } else {
@@ -142,7 +142,7 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
         }
         slots[SLOT_SCRAB_IN].stackSize--;
         if (slots[SLOT_SCRAB_IN].stackSize <= 0) slots[SLOT_SCRAB_IN] = null;
-        if (slots[SLOT_SCRAB_IN] != null) generateNextOutput(slots[SLOT_SCRAB_IN].getItem() == ElectricalEngineering.pcbScrapHV);
+        if (slots[SLOT_SCRAB_IN] != null) generateNextOutput(slots[SLOT_SCRAB_IN].getItem() == ItemManager.pcbScrapHV);
     }
 
     private boolean canEtch() {
@@ -156,7 +156,7 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
 
     private void finishEtch() {
         if (slots[SLOT_PCB_OUT] == null) {
-            slots[SLOT_PCB_OUT] = new ItemStack(ElectricalEngineering.pcbEtched);
+            slots[SLOT_PCB_OUT] = new ItemStack(ItemManager.pcbEtched);
         } else {
             slots[SLOT_PCB_OUT].stackSize++;
         }
@@ -206,9 +206,9 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack item) {
-        if (slot == SLOT_SCRAB_IN && (item.getItem() == ElectricalEngineering.pcbScrapLV || item.getItem() == ElectricalEngineering.pcbScrapHV)) {
+        if (slot == SLOT_SCRAB_IN && (item.getItem() == ItemManager.pcbScrapLV || item.getItem() == ItemManager.pcbScrapHV)) {
             return true;
-        } else if (slot == SLOT_ACID_IN && item.getItem() == ElectricalEngineering.bucketAcid) {
+        } else if (slot == SLOT_ACID_IN && item.getItem() == ItemManager.bucketAcid) {
             return true;
         }
         return false;

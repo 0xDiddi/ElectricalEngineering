@@ -4,9 +4,9 @@ import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
 import gmail.theultimatehose.electricalengineering.Util;
 import gmail.theultimatehose.electricalengineering.gui.GUISolder;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -28,8 +28,8 @@ public class DeSolderRecipeHandler extends TemplateRecipeHandler {
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals(this.getName()) && getClass() == DeSolderRecipeHandler.class) {
-            arecipes.add(new CachedDeSolder(new ItemStack(ElectricalEngineering.pcbLVBurnt), new ItemStack(ElectricalEngineering.pcbScrapLV)));
-            arecipes.add(new CachedDeSolder(new ItemStack(ElectricalEngineering.pcbHVBurnt), new ItemStack(ElectricalEngineering.pcbScrapHV)));
+            arecipes.add(new CachedDeSolder(new ItemStack(ItemManager.pcbLVBurnt), new ItemStack(ItemManager.pcbScrapLV)));
+            arecipes.add(new CachedDeSolder(new ItemStack(ItemManager.pcbHVBurnt), new ItemStack(ItemManager.pcbScrapHV)));
         } else {
             super.loadCraftingRecipes(outputId, results);
         }
@@ -38,20 +38,20 @@ public class DeSolderRecipeHandler extends TemplateRecipeHandler {
     @Override
     public void loadCraftingRecipes(ItemStack result) {
         Item item = result.getItem();
-        if (item == ElectricalEngineering.pcbScrapLV) {
-            arecipes.add(new CachedDeSolder(new ItemStack(ElectricalEngineering.pcbLVBurnt), new ItemStack(ElectricalEngineering.pcbScrapLV)));
-        } else if (item == ElectricalEngineering.pcbScrapHV) {
-            arecipes.add(new CachedDeSolder(new ItemStack(ElectricalEngineering.pcbHVBurnt), new ItemStack(ElectricalEngineering.pcbScrapHV)));
+        if (item == ItemManager.pcbScrapLV) {
+            arecipes.add(new CachedDeSolder(new ItemStack(ItemManager.pcbLVBurnt), new ItemStack(ItemManager.pcbScrapLV)));
+        } else if (item == ItemManager.pcbScrapHV) {
+            arecipes.add(new CachedDeSolder(new ItemStack(ItemManager.pcbHVBurnt), new ItemStack(ItemManager.pcbScrapHV)));
         }
     }
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
         Item item = ingredient.getItem();
-        if (item == ElectricalEngineering.pcbLVBurnt) {
-            arecipes.add(new CachedDeSolder(new ItemStack(ElectricalEngineering.pcbLVBurnt), new ItemStack(ElectricalEngineering.pcbScrapLV)));
-        } else if (item == ElectricalEngineering.pcbHVBurnt) {
-            arecipes.add(new CachedDeSolder(new ItemStack(ElectricalEngineering.pcbHVBurnt), new ItemStack(ElectricalEngineering.pcbScrapHV)));
+        if (item == ItemManager.pcbLVBurnt) {
+            arecipes.add(new CachedDeSolder(new ItemStack(ItemManager.pcbLVBurnt), new ItemStack(ItemManager.pcbScrapLV)));
+        } else if (item == ItemManager.pcbHVBurnt) {
+            arecipes.add(new CachedDeSolder(new ItemStack(ItemManager.pcbHVBurnt), new ItemStack(ItemManager.pcbScrapHV)));
         }
     }
 

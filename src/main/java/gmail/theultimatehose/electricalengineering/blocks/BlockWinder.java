@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
 import gmail.theultimatehose.electricalengineering.gui.GuiHandler;
+import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import gmail.theultimatehose.electricalengineering.tile.TileEntityCoilWinder;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -64,11 +65,11 @@ public class BlockWinder extends BlockContainerExt {
         if (wire > 0) {
             while (wire > 0) {
                 if (wire > 64) {
-                    ItemStack is = new ItemStack(ElectricalEngineering.wireCopper, 64);
+                    ItemStack is = new ItemStack(ItemManager.wireCopper, 64);
                     this.dropStack(is, world, x, y, z);
                     wire -= 64;
                 } else {
-                    ItemStack is = new ItemStack(ElectricalEngineering.wireCopper, wire);
+                    ItemStack is = new ItemStack(ItemManager.wireCopper, wire);
                     this.dropStack(is, world, x, y, z);
                     wire -= wire;
                 }
