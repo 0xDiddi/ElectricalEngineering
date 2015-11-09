@@ -2,15 +2,27 @@ package gmail.theultimatehose.electricalengineering.tile;
 
 import cofh.api.energy.IEnergyReceiver;
 import gmail.theultimatehose.electricalengineering.network.sync.IPacketSyncerToClient;
+import gmail.theultimatehose.electricalengineering.network.sync.PacketSyncerToClient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient {
 
-    private boolean isPowerModuleInstalled;
-    private boolean isControlModuleInstalled;
-    private boolean isRedstoneModuleInstalled;
-    private boolean isRemoteModuleInstalled;
+    private boolean isPowerModuleInstalled, lastPwrInstalled;
+    private boolean isControlModuleInstalled, lastCtrlInstalled;
+    private boolean isRedstoneModuleInstalled, lastRsInstalled;
+    private boolean isRemoteModuleInstalled, lastRcInstalled;
+
+    @Override
+    public void updateEntity() {
+        if (isPowerModuleInstalled != lastPwrInstalled || isControlModuleInstalled != lastCtrlInstalled || isRedstoneModuleInstalled != lastRsInstalled || isRemoteModuleInstalled != lastRcInstalled) {
+            lastPwrInstalled = isPowerModuleInstalled;
+            lastCtrlInstalled = isControlModuleInstalled;
+            lastRsInstalled = isRedstoneModuleInstalled;
+            lastRcInstalled = isRemoteModuleInstalled;
+            sendUpdate();
+        }
+    }
 
     public void setIsPowerModuleInstalled(boolean isPowerModuleInstalled) {
         this.isPowerModuleInstalled = isPowerModuleInstalled;
@@ -84,17 +96,20 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
 
     @Override
     public int[] getValues() {
-        return new int[0];
+        return new int[] {(isPowerModuleInstalled ? 1 : 0), (isControlModuleInstalled ? 1 : 0), (isRedstoneModuleInstalled ? 1 : 0), (isRemoteModuleInstalled ? 1 : 0)};
     }
 
     @Override
     public void setValues(int[] values) {
-
+        isPowerModuleInstalled = values[0] == 1;
+        isControlModuleInstalled = values[1] == 1;
+        isRedstoneModuleInstalled = values[2] == 1;
+        isRemoteModuleInstalled = values[3] == 1;
     }
 
     @Override
     public void sendUpdate() {
-
+        PacketSyncerToClient.sendPacket(this);
     }
 
 }

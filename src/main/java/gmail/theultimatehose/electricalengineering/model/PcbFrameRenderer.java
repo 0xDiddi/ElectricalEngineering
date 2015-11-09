@@ -1,10 +1,7 @@
 package gmail.theultimatehose.electricalengineering.model;
 
 import gmail.theultimatehose.electricalengineering.Util;
-import gmail.theultimatehose.electricalengineering.block.BlockPcbFrame;
 import gmail.theultimatehose.electricalengineering.tile.TileEntityPcbFrame;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
