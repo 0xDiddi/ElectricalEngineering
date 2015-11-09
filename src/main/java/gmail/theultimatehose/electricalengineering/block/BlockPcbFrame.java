@@ -33,7 +33,7 @@ public class BlockPcbFrame extends BlockContainerExt {
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float par6, float par7, float par8) {
         if (!world.isRemote) {
             if (player.getHeldItem() == null) {
-                //TODO: Open inventory
+                //TODO: Open inventory when hand is empty
             } else {
                 ItemStack inHand = player.getCurrentEquippedItem();
                 TileEntityPcbFrame tile = (TileEntityPcbFrame) world.getTileEntity(x, y, z);
@@ -42,6 +42,24 @@ public class BlockPcbFrame extends BlockContainerExt {
                     inHand.stackSize--;
                     if (inHand.stackSize <= 0) inHand = null;
                     player.setCurrentItemOrArmor(0, inHand);
+                } else if (inHand.getItem() == ItemManager.pcbControl && !tile.isControlModuleInstalled()) {
+                    tile.setIsControlModuleInstalled(true);
+                    inHand.stackSize--;
+                    if (inHand.stackSize <= 0) inHand = null;
+                    player.setCurrentItemOrArmor(0, inHand);
+                } else if (inHand.getItem() == ItemManager.resistor && !tile.isRedstoneModuleInstalled()) {
+                    tile.setIsRedstoneModuleInstalled(true);
+                    inHand.stackSize--;
+                    if (inHand.stackSize <= 0) inHand = null;
+                    player.setCurrentItemOrArmor(0, inHand);
+                } else if (inHand.getItem() == ItemManager.coil && !tile.isRemoteModuleInstalled()) {
+                    tile.setIsRemoteModuleInstalled(true);
+                    inHand.stackSize--;
+                    if (inHand.stackSize <= 0) inHand = null;
+                    player.setCurrentItemOrArmor(0, inHand);
+                } else {
+                    //TODO: Remove modules
+                    //TODO: Open inventory when no "upgrade" is applicable
                 }
             }
         }

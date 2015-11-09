@@ -1,7 +1,10 @@
 package gmail.theultimatehose.electricalengineering.model;
 
 import gmail.theultimatehose.electricalengineering.Util;
+import gmail.theultimatehose.electricalengineering.block.BlockPcbFrame;
 import gmail.theultimatehose.electricalengineering.tile.TileEntityPcbFrame;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockChest;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -31,10 +34,9 @@ public class PcbFrameRenderer extends TileEntitySpecialRenderer {
         GL11.glRotatef(180f, 1f, 0, 0);
         GL11.glRotatef(meta * 90f + 180f, 0, 1f, 0);
 
-        TileEntityPcbFrame tile = (TileEntityPcbFrame) tileEntity.getWorldObj().getTileEntity(Math.round(worldX), Math.round(worldY), Math.round(worldZ));
+        TileEntityPcbFrame tile = (TileEntityPcbFrame) tileEntity;
 
-        //this.model.render(0.0625f, tile.isPowerModuleInstalled(), tile.isControlModuleInstalled(), tile.isRedstoneModuleInstalled(), tile.isRemoteModuleInstalled());
-        this.model.render(0.0625f, false, false, false, false);
+        this.model.render(0.0625f, tile.isPowerModuleInstalled(), tile.isControlModuleInstalled(), tile.isRedstoneModuleInstalled(), tile.isRemoteModuleInstalled());
 
         GL11.glPopMatrix();
     }
