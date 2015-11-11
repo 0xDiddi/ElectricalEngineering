@@ -26,7 +26,7 @@ public class PcbFrameRenderer extends TileEntitySpecialRenderer {
         GL11.glTranslatef(worldX, worldY, worldZ);
         Minecraft.getMinecraft().renderEngine.bindTexture(resLoc);
 
-        int meta = tileEntity.blockMetadata;
+        int meta = tileEntity.getBlockMetadata();
 
         GL11.glRotatef(180f, 1f, 0, 0);
         GL11.glRotatef(meta * 90f + 180f, 0, 1f, 0);

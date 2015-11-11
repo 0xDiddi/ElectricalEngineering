@@ -12,14 +12,16 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
     private boolean isControlModuleInstalled, lastCtrlInstalled;
     private boolean isRedstoneModuleInstalled, lastRsInstalled;
     private boolean isRemoteModuleInstalled, lastRcInstalled;
+    private int lastMeta;
 
     @Override
     public void updateEntity() {
-        if (isPowerModuleInstalled != lastPwrInstalled || isControlModuleInstalled != lastCtrlInstalled || isRedstoneModuleInstalled != lastRsInstalled || isRemoteModuleInstalled != lastRcInstalled) {
+        if (isPowerModuleInstalled != lastPwrInstalled || isControlModuleInstalled != lastCtrlInstalled || isRedstoneModuleInstalled != lastRsInstalled || isRemoteModuleInstalled != lastRcInstalled || lastMeta != blockMetadata) {
             lastPwrInstalled = isPowerModuleInstalled;
             lastCtrlInstalled = isControlModuleInstalled;
             lastRsInstalled = isRedstoneModuleInstalled;
             lastRcInstalled = isRemoteModuleInstalled;
+            lastMeta = blockMetadata;
             sendUpdate();
         }
     }
@@ -96,7 +98,7 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
 
     @Override
     public int[] getValues() {
-        return new int[] {(isPowerModuleInstalled ? 1 : 0), (isControlModuleInstalled ? 1 : 0), (isRedstoneModuleInstalled ? 1 : 0), (isRemoteModuleInstalled ? 1 : 0)};
+        return new int[] {(isPowerModuleInstalled ? 1 : 0), (isControlModuleInstalled ? 1 : 0), (isRedstoneModuleInstalled ? 1 : 0), (isRemoteModuleInstalled ? 1 : 0), blockMetadata};
     }
 
     @Override
@@ -105,6 +107,7 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
         isControlModuleInstalled = values[1] == 1;
         isRedstoneModuleInstalled = values[2] == 1;
         isRemoteModuleInstalled = values[3] == 1;
+        blockMetadata = values[4];
     }
 
     @Override
