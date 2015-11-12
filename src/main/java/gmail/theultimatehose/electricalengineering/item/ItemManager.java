@@ -21,6 +21,7 @@ public class ItemManager {
     public static Item hardPaper;
     public static Item bucketAcid;
     public static Item bolt;
+    public static Item copperRod;
 
     public static Item pcbUnetched;
     public static Item pcbEtched;
@@ -33,32 +34,39 @@ public class ItemManager {
     public static Item resistor;
     public static Item transformer;
 
+    public static Item rsAntenna;
+    public static Item rcAntenna;
+
     public static Item gaussGun;
 
     public static void initItems() {
-        wireCopper = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.WIRE_COPPER).setTextureName("electricalengineering:copperWire").setCreativeTab(CreativeTabGeneral.instance);
-        tubeIron = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.TUBE_IRON).setTextureName("electricalengineering:tubeIron").setCreativeTab(CreativeTabGeneral.instance);
-        coil = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.COIL).setMaxStackSize(1).setMaxDamage(2049).setTextureName("electricalengineering:coil").setCreativeTab(CreativeTabGeneral.instance).setNoRepair();
-        pcbLVBurnt = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.PCB_LV_BURNT).setMaxStackSize(32).setTextureName("electricalengineering:pcbNormalBurnt").setCreativeTab(CreativeTabGeneral.instance);
-        pcbHVBurnt = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.PCB_HV_BURNT).setMaxStackSize(32).setTextureName("electricalengineering:pcbHVBurnt").setCreativeTab(CreativeTabGeneral.instance);
-        pcbScrapLV = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.PCB_SCRAP_LV).setTextureName("electricalengineering:pcbScrapLV").setCreativeTab(CreativeTabGeneral.instance);
-        pcbScrapHV = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.PCB_SCRAP_HV).setTextureName("electricalengineering:pcbScrapHV").setCreativeTab(CreativeTabGeneral.instance);
-        hardPaperRaw = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.HARDPAPER_RAW).setTextureName("electricalengineering:hardPaper_raw").setCreativeTab(CreativeTabGeneral.instance);
-        hardPaper = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.HARDPAPER).setTextureName("electricalengineering:hardPaper").setCreativeTab(CreativeTabGeneral.instance);
-        bucketAcid = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.BUCKET_ACID).setMaxStackSize(1).setTextureName("electricalengineering:bucket_acid").setCreativeTab(CreativeTabGeneral.instance);
-        pcbUnetched = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.PCB_UNETCHED).setTextureName("electricalengineering:pcbUnetched").setCreativeTab(CreativeTabGeneral.instance);
-        pcbEtched = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.PCB_ETCHED).setTextureName("electricalengineering:pcbEtched").setCreativeTab(CreativeTabGeneral.instance);
-        pcbControl = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.PCB_CONTROL).setTextureName("electricalengineering:pcbControl").setCreativeTab(CreativeTabGeneral.instance);
-        pcbVoltReg = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.PCB_VOLT_REG).setTextureName("electricalengineering:pcbVoltReg").setCreativeTab(CreativeTabGeneral.instance);
-        bolt = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.BOLT).setTextureName("electricalengineering:bolt").setCreativeTab(CreativeTabWeapons.instance);
+        wireCopper = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.WIRE_COPPER).setTextureName(Util.MOD_ID_LOWER + ":copperWire").setCreativeTab(CreativeTabGeneral.instance);
+        tubeIron = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.TUBE_IRON).setTextureName(Util.MOD_ID_LOWER + ":tubeIron").setCreativeTab(CreativeTabGeneral.instance);
+        coil = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.COIL).setMaxStackSize(1).setMaxDamage(2049).setTextureName(Util.MOD_ID_LOWER + ":coil").setCreativeTab(CreativeTabGeneral.instance).setNoRepair();
+        pcbLVBurnt = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.PCB_LV_BURNT).setMaxStackSize(32).setTextureName(Util.MOD_ID_LOWER + ":pcbNormalBurnt").setCreativeTab(CreativeTabGeneral.instance);
+        pcbHVBurnt = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.PCB_HV_BURNT).setMaxStackSize(32).setTextureName(Util.MOD_ID_LOWER + ":pcbHVBurnt").setCreativeTab(CreativeTabGeneral.instance);
+        pcbScrapLV = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.PCB_SCRAP_LV).setTextureName(Util.MOD_ID_LOWER + ":pcbScrapLV").setCreativeTab(CreativeTabGeneral.instance);
+        pcbScrapHV = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.PCB_SCRAP_HV).setTextureName(Util.MOD_ID_LOWER + ":pcbScrapHV").setCreativeTab(CreativeTabGeneral.instance);
+        hardPaperRaw = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.HARDPAPER_RAW).setTextureName(Util.MOD_ID_LOWER + ":hardPaper_raw").setCreativeTab(CreativeTabGeneral.instance);
+        hardPaper = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.HARDPAPER).setTextureName(Util.MOD_ID_LOWER + ":hardPaper").setCreativeTab(CreativeTabGeneral.instance);
+        bucketAcid = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.BUCKET_ACID).setMaxStackSize(1).setTextureName(Util.MOD_ID_LOWER + ":bucket_acid").setCreativeTab(CreativeTabGeneral.instance);
+        pcbUnetched = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.PCB_UNETCHED).setTextureName(Util.MOD_ID_LOWER + ":pcbUnetched").setCreativeTab(CreativeTabGeneral.instance);
+        pcbEtched = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.PCB_ETCHED).setTextureName(Util.MOD_ID_LOWER + ":pcbEtched").setCreativeTab(CreativeTabGeneral.instance);
+        pcbControl = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.PCB_CONTROL).setTextureName(Util.MOD_ID_LOWER + ":pcbControl").setCreativeTab(CreativeTabGeneral.instance);
+        pcbVoltReg = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.PCB_VOLT_REG).setTextureName(Util.MOD_ID_LOWER + ":pcbVoltReg").setCreativeTab(CreativeTabGeneral.instance);
+        bolt = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.BOLT).setTextureName(Util.MOD_ID_LOWER + ":bolt").setCreativeTab(CreativeTabWeapons.instance);
+        copperRod = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.COPPER_ROD).setTextureName(Util.MOD_ID_LOWER + ":copperRod").setCreativeTab(CreativeTabGeneral.instance);
 
-        capacitorLV = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.CAPACITOR_LV).setTextureName("electricalengineering:capacitor_LV").setCreativeTab(CreativeTabGeneral.instance);
-        capacitorHV = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.CAPACITOR_HV).setTextureName("electricalengineering:capacitor_HV").setCreativeTab(CreativeTabGeneral.instance);
-        transistor = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.TRANSISTOR).setTextureName("electricalengineering:transistor").setCreativeTab(CreativeTabGeneral.instance);
-        resistor = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.RESISTOR).setTextureName("electricalengineering:resistor").setCreativeTab(CreativeTabGeneral.instance);
-        transformer = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.TRANSFORMER).setTextureName("electricalengineering:transformer").setCreativeTab(CreativeTabGeneral.instance);
+        capacitorLV = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.CAPACITOR_LV).setTextureName(Util.MOD_ID_LOWER + ":capacitor_LV").setCreativeTab(CreativeTabGeneral.instance);
+        capacitorHV = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.CAPACITOR_HV).setTextureName(Util.MOD_ID_LOWER + ":capacitor_HV").setCreativeTab(CreativeTabGeneral.instance);
+        transistor = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.TRANSISTOR).setTextureName(Util.MOD_ID_LOWER + ":transistor").setCreativeTab(CreativeTabGeneral.instance);
+        resistor = new Item().setUnlocalizedName(Util.MOD_ID + "_"  + Names.RESISTOR).setTextureName(Util.MOD_ID_LOWER + ":resistor").setCreativeTab(CreativeTabGeneral.instance);
+        transformer = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.TRANSFORMER).setTextureName(Util.MOD_ID_LOWER + ":transformer").setCreativeTab(CreativeTabGeneral.instance);
 
-        gaussGun = new ItemGaussGun().setUnlocalizedName(Util.MOD_ID + "_"  + Names.GAUSS_GUN).setFull3D().setTextureName("electricalengineering:gaussGun").setCreativeTab(CreativeTabWeapons.instance);
+        rsAntenna = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.MODULE_REDSTONE_ANTENNA).setTextureName(Util.MOD_ID_LOWER + ":rsAntenna").setCreativeTab(CreativeTabGeneral.instance);
+        rcAntenna = new Item().setUnlocalizedName(Util.MOD_ID + "_" + Names.MODULE_REMOTE_ANTENNA).setTextureName(Util.MOD_ID_LOWER + ":rcAntenna").setCreativeTab(CreativeTabGeneral.instance);
+
+        gaussGun = new ItemGaussGun().setUnlocalizedName(Util.MOD_ID + "_"  + Names.GAUSS_GUN).setFull3D().setTextureName(Util.MOD_ID_LOWER + ":gaussGun").setCreativeTab(CreativeTabWeapons.instance);
     }
 
     public static void registerItemsToGR() {
@@ -77,12 +85,16 @@ public class ItemManager {
         GameRegistry.registerItem(pcbControl, Names.PCB_CONTROL);
         GameRegistry.registerItem(pcbVoltReg, Names.PCB_VOLT_REG);
         GameRegistry.registerItem(bolt, Names.BOLT);
+        GameRegistry.registerItem(copperRod, Names.COPPER_ROD);
 
         GameRegistry.registerItem(capacitorLV, Names.CAPACITOR_LV);
         GameRegistry.registerItem(capacitorHV, Names.CAPACITOR_HV);
         GameRegistry.registerItem(transistor, Names.TRANSISTOR);
         GameRegistry.registerItem(resistor, Names.RESISTOR);
         GameRegistry.registerItem(transformer, Names.TRANSFORMER);
+
+        GameRegistry.registerItem(rsAntenna, Names.MODULE_REDSTONE_ANTENNA);
+        GameRegistry.registerItem(rcAntenna, Names.MODULE_REMOTE_ANTENNA);
 
         GameRegistry.registerItem(gaussGun, Names.GAUSS_GUN);
     }
@@ -103,12 +115,16 @@ public class ItemManager {
         OreDictionary.registerOre("pcbControl", pcbControl);
         OreDictionary.registerOre("pcbVoltReg", pcbVoltReg);
         OreDictionary.registerOre("bolt", bolt);
+        OreDictionary.registerOre("copperRod", copperRod);
 
         OreDictionary.registerOre("capacitorLV", capacitorLV);
         OreDictionary.registerOre("capacitorHV", capacitorHV);
         OreDictionary.registerOre("transistor", transistor);
         OreDictionary.registerOre("resistor", resistor);
         OreDictionary.registerOre("transformer", transformer);
+
+        OreDictionary.registerOre("moduleRsAntenna", rsAntenna);
+        OreDictionary.registerOre("moduleRcAntenna", rcAntenna);
 
         OreDictionary.registerOre("gaussGun", gaussGun);
     }

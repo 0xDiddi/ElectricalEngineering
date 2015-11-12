@@ -47,12 +47,12 @@ public class BlockPcbFrame extends BlockContainerExt {
                     inHand.stackSize--;
                     if (inHand.stackSize <= 0) inHand = null;
                     player.setCurrentItemOrArmor(0, inHand);
-                } else if (inHand.getItem() == ItemManager.resistor && !tile.isRedstoneModuleInstalled()) {
+                } else if (inHand.getItem() == ItemManager.rsAntenna && !tile.isRedstoneModuleInstalled()) {
                     tile.setIsRedstoneModuleInstalled(true);
                     inHand.stackSize--;
                     if (inHand.stackSize <= 0) inHand = null;
                     player.setCurrentItemOrArmor(0, inHand);
-                } else if (inHand.getItem() == ItemManager.coil && !tile.isRemoteModuleInstalled()) {
+                } else if (inHand.getItem() == ItemManager.rcAntenna && !tile.isRemoteModuleInstalled()) {
                     tile.setIsRemoteModuleInstalled(true);
                     inHand.stackSize--;
                     if (inHand.stackSize <= 0) inHand = null;

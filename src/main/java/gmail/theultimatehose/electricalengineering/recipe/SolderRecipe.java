@@ -23,6 +23,8 @@ public class SolderRecipe extends ShapedOreRecipe {
         recipes.add(new SolderRecipe(new ItemStack(ItemManager.pcbControl, 1), "RCT", "TRC", "NPN", 'N', "nuggetTin", 'P', ItemManager.pcbEtched, 'R', ItemManager.resistor, 'T', ItemManager.transistor, 'C', ItemManager.capacitorLV));
         recipes.add(new SolderRecipe(new ItemStack(ItemManager.pcbVoltReg, 1), "FHT", "TRC", "NPN", 'N', "nuggetTin", 'P', ItemManager.pcbEtched, 'R', ItemManager.resistor, 'T', ItemManager.transistor, 'C', ItemManager.capacitorLV, 'F', ItemManager.transformer, 'H', ItemManager.capacitorHV));
         recipes.add(new SolderRecipe(new ItemStack(ItemManager.gaussGun, 1), "TRB", " LC", "  I", 'T', new ItemStack(ItemManager.coil, 1, OreDictionary.WILDCARD_VALUE), 'R', ItemManager.pcbVoltReg, 'B', Blocks.iron_block, 'L', Blocks.lever, 'C', ItemManager.pcbControl, 'I', Items.iron_ingot));
+        recipes.add(new SolderRecipe(new ItemStack(ItemManager.rcAntenna, 1), "RRR", " R ", " N ", 'R', "copperRod", 'N', "nuggetTin"));
+        recipes.add(new SolderRecipe(new ItemStack(ItemManager.rsAntenna, 1), " CR", "TCR", "ICR", 'C', "copperRod", 'R', "blockRedstone", 'T', "nuggetTin", 'I', "ingotTin"));
     }
 
     public static SolderRecipe checkMatch(ItemStack[] matrix) {

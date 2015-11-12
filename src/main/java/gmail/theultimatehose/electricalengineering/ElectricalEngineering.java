@@ -77,6 +77,7 @@ public class ElectricalEngineering {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockManager.machineMAD), "PPP", "BGB", "BRB", 'G', "paneGlassColorless", 'B', "blockIron", 'R', "blockRedstone", 'P', Blocks.sticky_piston));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockManager.machineWinder), "CCC", "PTP", "CRC", 'C', "cobblestone", 'P', Blocks.piston, 'T', ItemManager.tubeIron, 'R', "blockRedstone"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemManager.bolt), "  I", " I ", "I  ", 'I', "ingotIron"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemManager.copperRod), "  C", " C ", "C  ", 'C', "ingotCopper"));
 
         GameRegistry.addSmelting(ItemManager.hardPaperRaw, new ItemStack(ItemManager.hardPaper), 10);
 

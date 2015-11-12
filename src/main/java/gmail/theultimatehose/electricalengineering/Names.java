@@ -12,16 +12,19 @@ public class Names {
     public static final String HARDPAPER_RAW = "HardPaperRaw";
     public static final String HARDPAPER = "HardPaper";
     public static final String BUCKET_ACID = "BucketAcid";
+    public static final String BOLT = "Bolt";
+    public static final String COPPER_ROD = "CopperRod";
+
     public static final String PCB_UNETCHED = "PcbUnetched";
     public static final String PCB_ETCHED = "PcbEtched";
     public static final String PCB_CONTROL = "PcbControl";
     public static final String PCB_VOLT_REG = "PcbVoltReg";
+
     public static final String CAPACITOR_LV = "CapacitorLV";
     public static final String CAPACITOR_HV = "CapacitorHV";
     public static final String TRANSISTOR = "Transistor";
     public static final String RESISTOR = "Resistor";
     public static final String TRANSFORMER = "Transformer";
-    public static final String BOLT = "Bolt";
 
     public static final String MODULE_REDSTONE_ANTENNA = "ModuleRedstoneAntenna";
     public static final String MODULE_REMOTE_ANTENNA = "ModuleRemoteAntenna";

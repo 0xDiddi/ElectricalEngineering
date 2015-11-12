@@ -16,12 +16,16 @@ item.ElectricalEngineering_PcbEtched.name=Etched PCB
 item.ElectricalEngineering_PcbControl.name=Control circuit
 item.ElectricalEngineering_PcbVoltReg.name=Voltage Regulation Circuit
 item.ElectricalEngineering_Bolt.name=Iron Bolt
+item.ElectricalEngineering_CopperRod.name=Copper Rod
 
 item.ElectricalEngineering_CapacitorLV.name=Capacitor
 item.ElectricalEngineering_CapacitorHV.name=High Voltage Capacitor
 item.ElectricalEngineering_Transistor.name=Transistor
 item.ElectricalEngineering_Resistor.name=Resistor
 item.ElectricalEngineering_Transformer.name=Transformer
+
+item.ElectricalEngineering_ModuleRedstoneAntenna.name=Redstone Emitter Module
+item.ElectricalEngineering_ModuleRemoteAntenna.name=Remote Control Module
 
 item.ElectricalEngineering_GaussGun.name=Gauss Gun
 
