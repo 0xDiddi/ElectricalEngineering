@@ -8,12 +8,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-public class PcbFrameRenderer extends TileEntitySpecialRenderer {
+public class PcbFrameTileEntityRenderer extends TileEntitySpecialRenderer {
 
     private final ModelPcbFrame model;
     private final ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/model/PcbFrame.png");
 
-    public PcbFrameRenderer() {
+    public PcbFrameTileEntityRenderer() {
         this.model = new ModelPcbFrame();
     }
 

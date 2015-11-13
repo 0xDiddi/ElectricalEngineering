@@ -1,5 +1,6 @@
 package gmail.theultimatehose.electricalengineering;
 
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -15,6 +16,7 @@ import gmail.theultimatehose.electricalengineering.event.CraftEvent;
 import gmail.theultimatehose.electricalengineering.event.WorldDecorationEvent;
 import gmail.theultimatehose.electricalengineering.gui.GuiHandler;
 import gmail.theultimatehose.electricalengineering.item.ItemManager;
+import gmail.theultimatehose.electricalengineering.model.PcbFrameBlockRenderer;
 import gmail.theultimatehose.electricalengineering.network.PacketHandler;
 import gmail.theultimatehose.electricalengineering.proxy.CommonProxy;
 import gmail.theultimatehose.electricalengineering.recipe.SolderRecipe;
@@ -93,6 +95,8 @@ public class ElectricalEngineering {
         GameRegistry.registerTileEntity(TileEntityPcbFrame.class, Util.MOD_ID_LOWER + ":tileEntityPcbFrame");
 
         EntityRegistry.registerModEntity(EntityBolt.class, "Bolt", EntityRegistry.findGlobalUniqueEntityId(), instance, 64, 80000, true);
+
+        RenderingRegistry.registerBlockHandler(new PcbFrameBlockRenderer());
 
         GuiHandler.init();
         SolderRecipe.init();
