@@ -2,6 +2,7 @@ package gmail.theultimatehose.electricalengineering.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import gmail.theultimatehose.electricalengineering.Util;
 import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import gmail.theultimatehose.electricalengineering.network.sync.IPacketSyncerToClient;
 import gmail.theultimatehose.electricalengineering.network.sync.PacketSyncerToClient;
@@ -35,7 +36,7 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
 
     public TileEntityMAD() {
         slots = new ItemStack[10];
-        name = "container.electricalengineering.mad";
+        name = "container." + Util.MOD_ID_LOWER + ".mad";
 
         sortTime = 100;
         etchTime = 1000;

@@ -1,5 +1,7 @@
 package gmail.theultimatehose.electricalengineering.block;
 
+import gmail.theultimatehose.electricalengineering.ElectricalEngineering;
+import gmail.theultimatehose.electricalengineering.gui.GuiHandler;
 import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import gmail.theultimatehose.electricalengineering.tile.TileEntityPcbFrame;
 import net.minecraft.block.material.Material;
@@ -49,7 +51,8 @@ public class BlockPcbFrame extends BlockContainerExt {
                         tile.setIsPowerModuleInstalled(false);
                     }
                 } else {
-                    //TODO: Open inventory when hand is empty and player isn't sneaking
+                    TileEntityPcbFrame pcbFrame = (TileEntityPcbFrame) world.getTileEntity(x, y, z);
+                    if (pcbFrame != null) player.openGui(ElectricalEngineering.instance, GuiHandler.PCB_FRAME_ID, world, x, y, z);
                 }
             } else {
                 ItemStack inHand = player.getCurrentEquippedItem();
@@ -75,7 +78,8 @@ public class BlockPcbFrame extends BlockContainerExt {
                     if (inHand.stackSize <= 0) inHand = null;
                     player.setCurrentItemOrArmor(0, inHand);
                 } else {
-                    //TODO: Open inventory when no "module" is applicable
+                    TileEntityPcbFrame pcbFrame = (TileEntityPcbFrame) world.getTileEntity(x, y, z);
+                    if (pcbFrame != null) player.openGui(ElectricalEngineering.instance, GuiHandler.PCB_FRAME_ID, world, x, y, z);
                 }
             }
         }

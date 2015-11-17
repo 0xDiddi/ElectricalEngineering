@@ -4,6 +4,7 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gmail.theultimatehose.electricalengineering.Util;
 import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import gmail.theultimatehose.electricalengineering.network.sync.IPacketSyncerToClient;
 import gmail.theultimatehose.electricalengineering.network.sync.PacketSyncerToClient;
@@ -37,7 +38,7 @@ public class TileEntitySolder extends TileEntityInventoryBase implements IEnergy
 
     public TileEntitySolder() {
         slots = new ItemStack[13];
-        name = "container.electricalengineering.solder";
+        name = "container." + Util.MOD_ID_LOWER + ".solder";
 
         this.desolderTime = 100;
         this.solderTime = 200;

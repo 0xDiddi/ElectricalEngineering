@@ -31,8 +31,8 @@ public class GUICoilWinder extends GuiContainer {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+    protected void drawGuiContainerBackgroundLayer(float par0, int par1, int par2) {
+        GL11.glColor4f(1, 1, 1, 1);
 
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);

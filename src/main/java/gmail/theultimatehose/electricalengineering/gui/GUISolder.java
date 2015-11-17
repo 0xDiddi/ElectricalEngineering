@@ -32,7 +32,7 @@ public class GUISolder extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glColor4f(1, 1, 1, 1);
 
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);

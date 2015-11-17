@@ -1,18 +1,31 @@
 package gmail.theultimatehose.electricalengineering.tile;
 
+import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import gmail.theultimatehose.electricalengineering.Util;
 import gmail.theultimatehose.electricalengineering.network.sync.IPacketSyncerToClient;
 import gmail.theultimatehose.electricalengineering.network.sync.PacketSyncerToClient;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient {
+
+    public EnergyStorage storage = new EnergyStorage(50000, 1000);
+    public String name;
 
     private boolean isPowerModuleInstalled, lastPwrInstalled;
     private boolean isControlModuleInstalled, lastCtrlInstalled;
     private boolean isRedstoneModuleInstalled, lastRsInstalled;
     private boolean isRemoteModuleInstalled, lastRcInstalled;
     private int lastMeta;
+
+    public TileEntityPcbFrame() {
+        slots = new ItemStack[0];
+        name = "container." + Util.MOD_ID_LOWER + "pcbFrame";
+
+    }
 
     @Override
     public void updateEntity() {
@@ -74,6 +87,11 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
         isRedstoneModuleInstalled = compound.getBoolean("RS_MOD");
         isRemoteModuleInstalled = compound.getBoolean("RC_MOD");
         super.readFromNBT(compound);
+    }
+
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer player) {
+        return player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64;
     }
 
     @Override

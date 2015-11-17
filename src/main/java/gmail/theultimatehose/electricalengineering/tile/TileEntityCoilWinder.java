@@ -4,6 +4,7 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gmail.theultimatehose.electricalengineering.Util;
 import gmail.theultimatehose.electricalengineering.item.ItemManager;
 import gmail.theultimatehose.electricalengineering.network.sync.IPacketSyncerToClient;
 import gmail.theultimatehose.electricalengineering.network.sync.PacketSyncerToClient;
@@ -25,7 +26,7 @@ public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEn
 
     public TileEntityCoilWinder() {
         slots = new ItemStack[3];
-        name = "container.electricalengineering.coilWinder";
+        name = "container." + Util.MOD_ID_LOWER + ".coilWinder";
 
         windTime = 10;
         coilAmount = 2048;
