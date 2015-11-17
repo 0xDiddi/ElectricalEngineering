@@ -33,7 +33,24 @@ public class BlockPcbFrame extends BlockContainerExt {
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float par6, float par7, float par8) {
         if (!world.isRemote) {
             if (player.getHeldItem() == null) {
-                //TODO: Open inventory when hand is empty
+                if (player.isSneaking()) {
+                    TileEntityPcbFrame tile = (TileEntityPcbFrame) world.getTileEntity(x, y, z);
+                    if (tile.isRemoteModuleInstalled()) {
+                        player.setCurrentItemOrArmor(0, new ItemStack(ItemManager.rcAntenna));
+                        tile.setIsRemoteModuleInstalled(false);
+                    } else if (tile.isRedstoneModuleInstalled()) {
+                        player.setCurrentItemOrArmor(0, new ItemStack(ItemManager.rsAntenna));
+                        tile.setIsRedstoneModuleInstalled(false);
+                    } else if (tile.isControlModuleInstalled()) {
+                        player.setCurrentItemOrArmor(0, new ItemStack(ItemManager.pcbControl));
+                        tile.setIsControlModuleInstalled(false);
+                    } else if (tile.isPowerModuleInstalled()) {
+                        player.setCurrentItemOrArmor(0, new ItemStack(ItemManager.pcbVoltReg));
+                        tile.setIsPowerModuleInstalled(false);
+                    }
+                } else {
+                    //TODO: Open inventory when hand is empty and player isn't sneaking
+                }
             } else {
                 ItemStack inHand = player.getCurrentEquippedItem();
                 TileEntityPcbFrame tile = (TileEntityPcbFrame) world.getTileEntity(x, y, z);
@@ -58,8 +75,7 @@ public class BlockPcbFrame extends BlockContainerExt {
                     if (inHand.stackSize <= 0) inHand = null;
                     player.setCurrentItemOrArmor(0, inHand);
                 } else {
-                    //TODO: Remove modules
-                    //TODO: Open inventory when no "upgrade" is applicable
+                    //TODO: Open inventory when no "module" is applicable
                 }
             }
         }
