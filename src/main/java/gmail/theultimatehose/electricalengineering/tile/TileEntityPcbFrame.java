@@ -95,6 +95,11 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
     }
 
     @Override
+    public String getInventoryName() {
+        return "Pcb Frame";
+    }
+
+    @Override
     public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
         return 0;
     }
