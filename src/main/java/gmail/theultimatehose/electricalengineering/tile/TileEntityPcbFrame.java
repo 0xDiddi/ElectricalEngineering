@@ -21,6 +21,10 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
     private boolean isRemoteModuleInstalled, lastRcInstalled;
     private int lastMeta;
 
+    public String channelIn, channelOut;
+    public String compare;
+    public boolean[] rsIn = new boolean[6], rsOut = new boolean[6];
+
     public TileEntityPcbFrame() {
         slots = new ItemStack[0];
         name = "container." + Util.MOD_ID_LOWER + "pcbFrame";
@@ -77,6 +81,12 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
         compound.setBoolean("CTRL_MOD", isControlModuleInstalled);
         compound.setBoolean("RS_MOD", isRedstoneModuleInstalled);
         compound.setBoolean("RC_MOD", isRemoteModuleInstalled);
+
+        compound.setString("CH_IN", channelIn);
+        compound.setString("CH_OUT", channelOut);
+        compound.setString("CMP", compare);
+        compound.setIntArray("rs_in", Util.baToIa(rsIn));
+        compound.setIntArray("rs_out", Util.baToIa(rsOut));
         super.writeToNBT(compound);
     }
 
@@ -86,6 +96,12 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
         isControlModuleInstalled = compound.getBoolean("CTRL_MOD");
         isRedstoneModuleInstalled = compound.getBoolean("RS_MOD");
         isRemoteModuleInstalled = compound.getBoolean("RC_MOD");
+
+        channelIn = compound.getString("CH_IN");
+        channelOut = compound.getString("CH_OUT");
+        compare = compound.getString("CMP");
+        rsIn = Util.iaToBa(compound.getIntArray("rs_in"));
+        rsOut = Util.iaToBa(compound.getIntArray("rs_out"));
         super.readFromNBT(compound);
     }
 
@@ -116,12 +132,17 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
 
     @Override
     public boolean canConnectEnergy(ForgeDirection from) {
-        return false;
+        return from == ForgeDirection.DOWN;
     }
 
     @Override
     public int[] getValues() {
-        return new int[] {(isPowerModuleInstalled ? 1 : 0), (isControlModuleInstalled ? 1 : 0), (isRedstoneModuleInstalled ? 1 : 0), (isRemoteModuleInstalled ? 1 : 0), blockMetadata};
+        return new int[] {
+                (isPowerModuleInstalled ? 1 : 0),
+                (isControlModuleInstalled ? 1 : 0),
+                (isRedstoneModuleInstalled ? 1 : 0),
+                (isRemoteModuleInstalled ? 1 : 0),
+                blockMetadata};
     }
 
     @Override

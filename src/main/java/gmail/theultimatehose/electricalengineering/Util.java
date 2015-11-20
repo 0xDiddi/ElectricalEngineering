@@ -19,4 +19,20 @@ public class Util {
         FMLCommonHandler.instance().bus().register(o);
     }
 
+    public static int[] baToIa(boolean[] ba) {
+        int[] ia = new int[ba.length];
+        for (int i = 0; i < ba.length; i++) {
+            ia[i] = (ba[i]) ? 1 : 0;
+        }
+        return ia;
+    }
+
+    public static boolean[] iaToBa(int[] ia) {
+        boolean[] ba = new boolean[ia.length];
+        for (int i = 0; i < ia.length; i++) {
+            ba[i] = ia[i] == 1;
+        }
+        return ba;
+    }
+
 }
