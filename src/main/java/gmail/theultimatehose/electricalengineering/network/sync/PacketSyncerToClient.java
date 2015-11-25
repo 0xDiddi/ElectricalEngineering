@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * ï¿½ 2015 Ellpeck
  */
 
 package gmail.theultimatehose.electricalengineering.network.sync;
@@ -28,12 +28,7 @@ public class PacketSyncerToClient implements IMessage {
     private int y;
     private int z;
     private int[] values;
-
-    @SuppressWarnings("unused")
-    public PacketSyncerToClient() {
-
-    }
-
+    
     public PacketSyncerToClient(TileEntity tile, int[] values) {
         this.x = tile.xCoord;
         this.y = tile.yCoord;

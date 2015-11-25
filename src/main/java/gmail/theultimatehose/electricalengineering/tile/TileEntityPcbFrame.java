@@ -29,17 +29,33 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
         slots = new ItemStack[0];
         name = "container." + Util.MOD_ID_LOWER + "pcbFrame";
 
+        channelIn = "";
+        channelOut = "";
+        compare = "AND";
+        rsIn = new boolean[6];
+        rsOut = new boolean[6];
+
     }
 
     @Override
     public void updateEntity() {
-        if (isPowerModuleInstalled != lastPwrInstalled || isControlModuleInstalled != lastCtrlInstalled || isRedstoneModuleInstalled != lastRsInstalled || isRemoteModuleInstalled != lastRcInstalled || lastMeta != blockMetadata) {
-            lastPwrInstalled = isPowerModuleInstalled;
-            lastCtrlInstalled = isControlModuleInstalled;
-            lastRsInstalled = isRedstoneModuleInstalled;
-            lastRcInstalled = isRemoteModuleInstalled;
-            lastMeta = blockMetadata;
-            sendUpdate();
+        if (!worldObj.isRemote) {
+            if (isPowerModuleInstalled != lastPwrInstalled || isControlModuleInstalled != lastCtrlInstalled || isRedstoneModuleInstalled != lastRsInstalled || isRemoteModuleInstalled != lastRcInstalled || lastMeta != blockMetadata) {
+                lastPwrInstalled = isPowerModuleInstalled;
+                lastCtrlInstalled = isControlModuleInstalled;
+                lastRsInstalled = isRedstoneModuleInstalled;
+                lastRcInstalled = isRemoteModuleInstalled;
+                lastMeta = blockMetadata;
+                sendUpdate();
+            }
+        }
+    }
+
+    @Override
+    public void closeInventory() {
+        super.closeInventory();
+        if (worldObj.isRemote) {
+            Util.LOGGER.info("channel in: " + channelIn);
         }
     }
 
@@ -85,8 +101,8 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
         compound.setString("CH_IN", channelIn);
         compound.setString("CH_OUT", channelOut);
         compound.setString("CMP", compare);
-        compound.setIntArray("rs_in", Util.baToIa(rsIn));
-        compound.setIntArray("rs_out", Util.baToIa(rsOut));
+        compound.setIntArray("RS_IN", Util.baToIa(rsIn));
+        compound.setIntArray("RS_OUT", Util.baToIa(rsOut));
         super.writeToNBT(compound);
     }
 
@@ -100,9 +116,27 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
         channelIn = compound.getString("CH_IN");
         channelOut = compound.getString("CH_OUT");
         compare = compound.getString("CMP");
-        rsIn = Util.iaToBa(compound.getIntArray("rs_in"));
-        rsOut = Util.iaToBa(compound.getIntArray("rs_out"));
+        rsIn = Util.iaToBa(compound.getIntArray("RS_IN"));
+        rsOut = Util.iaToBa(compound.getIntArray("RS_OUT"));
         super.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeSyncDataToNBT(NBTTagCompound compound) {
+        compound.setString("CH_IN", channelIn);
+        compound.setString("CH_OUT", channelOut);
+        compound.setString("CMP", compare);
+        compound.setIntArray("RS_IN", Util.baToIa(rsIn));
+        compound.setIntArray("RS_OUT", Util.baToIa(rsOut));
+    }
+
+    @Override
+    public void readSyncDataFromNBT(NBTTagCompound compound) {
+        channelIn = compound.getString("CH_IN");
+        channelOut = compound.getString("CH_OUT");
+        compare = compound.getString("CMP");
+        rsIn = Util.iaToBa(compound.getIntArray("RS_IN"));
+        rsOut = Util.iaToBa(compound.getIntArray("RS_OUT"));
     }
 
     @Override
@@ -137,12 +171,39 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
 
     @Override
     public int[] getValues() {
-        return new int[] {
-                (isPowerModuleInstalled ? 1 : 0),
-                (isControlModuleInstalled ? 1 : 0),
-                (isRedstoneModuleInstalled ? 1 : 0),
-                (isRemoteModuleInstalled ? 1 : 0),
-                blockMetadata};
+        int[] ia = new int[48];
+        ia[0] = isPowerModuleInstalled ? 1 : 0;
+        ia[1] = isControlModuleInstalled ? 1 : 0;
+        ia[2] = isRedstoneModuleInstalled ? 1 : 0;
+        ia[3] = isRemoteModuleInstalled ? 1 : 0;
+        ia[4] = blockMetadata;
+
+        for (int i = 0; i < 6; i++) {
+            ia[i+5] = rsIn[i] ? 1 : 0;
+        }
+        for (int i = 0; i < 6; i++) {
+            ia[i+11] = rsOut[i] ? 1 : 0;
+        }
+
+        char[] c = channelIn.toCharArray();
+        for (int i = 0; i < 15; i++) {
+            if (!(i >= c.length))
+                ia[i+17] = c[i];
+        }
+        char[] d = channelOut.toCharArray();
+        for (int i = 0; i < 15; i++) {
+            if (!(i >= d.length))
+                ia[i+32] = d[i];
+        }
+
+        if (compare.equals("AND"))
+            ia[47] = 0;
+        else if (compare.equals("OR"))
+            ia[47] = 1;
+        else if (compare.equals("XOR"))
+            ia[47] = 2;
+
+        return ia;
     }
 
     @Override
@@ -152,6 +213,31 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
         isRedstoneModuleInstalled = values[2] == 1;
         isRemoteModuleInstalled = values[3] == 1;
         blockMetadata = values[4];
+
+        for (int i = 0; i < 6; i++) {
+            rsIn[i] = values[i+5] == 1;
+        }
+        for (int i = 0; i < 6; i++) {
+            rsOut[i] = values[i+11] == 1;
+        }
+        char[] c = new char[15];
+        for (int i = 0; i < 15; i++) {
+            c[i] = (char) values[i+32];
+        }
+        channelIn = String.valueOf(c);
+
+        c = new char[15];
+        for (int i = 0; i < 15; i++) {
+            c[i] = (char) values[i+32];
+        }
+        channelOut = String.valueOf(c);
+
+        if (values[47] == 0)
+            compare = "AND";
+        else if (values[47] == 1)
+            compare = "OR";
+        else if (values[47] == 2)
+            compare = "XOR";
     }
 
     @Override

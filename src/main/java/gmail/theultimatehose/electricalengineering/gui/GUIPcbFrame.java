@@ -32,35 +32,45 @@ public class GUIPcbFrame extends GuiContainer {
         this.tilePcbFrame = tile;
         this.xSize = 256;
         this.ySize = 227;
+
+        this.channelIn = tilePcbFrame.channelIn;
+        this.channelOut = tilePcbFrame.channelOut;
+        this.compare = tilePcbFrame.compare;
+        this.rsIn = tilePcbFrame.rsIn;
+        this.rsOut = tilePcbFrame.rsOut;
     }
 
     @Override
     public void initGui() {
         super.initGui();
+
         txtRcChannelIn = new GuiTextField(fontRendererObj, this.guiLeft + 7, this.guiTop + 27, 100, 20);
         txtRcChannelIn.setCanLoseFocus(true);
         txtRcChannelIn.setMaxStringLength(15);
-        buttonList.add(chkbxAND = new GuiCheckBox(0, this.guiLeft + 6, this.guiTop + 55, "AND", true));
-        buttonList.add(chkbxOR = new GuiCheckBox(1, this.guiLeft + 42, this.guiTop + 55, "OR", false));
-        buttonList.add(chkbxXOR = new GuiCheckBox(2, this.guiLeft + 74, this.guiTop + 55, "XOR", false));
+        txtRcChannelIn.setText(channelIn);
 
-        buttonList.add(chkbxUpIn = new GuiCheckBox(3, this.guiLeft + 6, this.guiTop + 88, "Up", false));
-        buttonList.add(chkbxDownIn = new GuiCheckBox(4, this.guiLeft + 55, this.guiTop + 88, "Down", false));
-        buttonList.add(chkbxWestIn = new GuiCheckBox(5, this.guiLeft + 6, this.guiTop + 104, "West", false));
-        buttonList.add(chkbxEastIn = new GuiCheckBox(6, this.guiLeft + 55, this.guiTop + 104, "East", false));
-        buttonList.add(chkbxNorthIn = new GuiCheckBox(7, this.guiLeft + 6, this.guiTop + 120, "North", false));
-        buttonList.add(chkbxSouthIn = new GuiCheckBox(8, this.guiLeft + 55, this.guiTop + 120, "South", false));
+        buttonList.add(chkbxAND = new GuiCheckBox(0, this.guiLeft + 6, this.guiTop + 55, "AND", compare.equals("AND")));
+        buttonList.add(chkbxOR = new GuiCheckBox(1, this.guiLeft + 42, this.guiTop + 55, "OR", compare.equals("OR")));
+        buttonList.add(chkbxXOR = new GuiCheckBox(2, this.guiLeft + 74, this.guiTop + 55, "XOR", compare.equals("XOR")));
+
+        buttonList.add(chkbxUpIn = new GuiCheckBox(3, this.guiLeft + 6, this.guiTop + 88, "Up", rsIn[1]));
+        buttonList.add(chkbxDownIn = new GuiCheckBox(4, this.guiLeft + 55, this.guiTop + 88, "Down", rsIn[0]));
+        buttonList.add(chkbxWestIn = new GuiCheckBox(5, this.guiLeft + 6, this.guiTop + 104, "West", rsIn[4]));
+        buttonList.add(chkbxEastIn = new GuiCheckBox(6, this.guiLeft + 55, this.guiTop + 104, "East", rsIn[5]));
+        buttonList.add(chkbxNorthIn = new GuiCheckBox(7, this.guiLeft + 6, this.guiTop + 120, "North", rsIn[2]));
+        buttonList.add(chkbxSouthIn = new GuiCheckBox(8, this.guiLeft + 55, this.guiTop + 120, "South", rsIn[3]));
 
         txtRcChannelOut = new GuiTextField(fontRendererObj, this.guiLeft + 137, this.guiTop + 27, 100, 20);
         txtRcChannelOut.setCanLoseFocus(true);
         txtRcChannelOut.setMaxStringLength(15);
+        txtRcChannelOut.setText(channelOut);
 
-        buttonList.add(chkbxUpOut = new GuiCheckBox(3, this.guiLeft + 137, this.guiTop + 65, "Up", false));
-        buttonList.add(chkbxDownOut = new GuiCheckBox(4, this.guiLeft + 186, this.guiTop + 65, "Down", false));
-        buttonList.add(chkbxWestOut = new GuiCheckBox(5, this.guiLeft + 137, this.guiTop + 81, "West", false));
-        buttonList.add(chkbxEastOut = new GuiCheckBox(6, this.guiLeft + 186, this.guiTop + 81, "East", false));
-        buttonList.add(chkbxNorthOut = new GuiCheckBox(7, this.guiLeft + 137, this.guiTop + 97, "North", false));
-        buttonList.add(chkbxSouthOut = new GuiCheckBox(8, this.guiLeft + 186, this.guiTop + 97, "South", false));
+        buttonList.add(chkbxUpOut = new GuiCheckBox(3, this.guiLeft + 137, this.guiTop + 65, "Up", rsOut[1]));
+        buttonList.add(chkbxDownOut = new GuiCheckBox(4, this.guiLeft + 186, this.guiTop + 65, "Down", rsOut[0]));
+        buttonList.add(chkbxWestOut = new GuiCheckBox(5, this.guiLeft + 137, this.guiTop + 81, "West", rsOut[4]));
+        buttonList.add(chkbxEastOut = new GuiCheckBox(6, this.guiLeft + 186, this.guiTop + 81, "East", rsOut[5]));
+        buttonList.add(chkbxNorthOut = new GuiCheckBox(7, this.guiLeft + 137, this.guiTop + 97, "North", rsOut[2]));
+        buttonList.add(chkbxSouthOut = new GuiCheckBox(8, this.guiLeft + 186, this.guiTop + 97, "South", rsOut[3]));
     }
 
     @Override
@@ -92,6 +102,9 @@ public class GUIPcbFrame extends GuiContainer {
             }
         } else {
             super.keyTyped(typedChar, keyCode);
+            if (keyCode == 28 || keyCode == 156) {
+                this.passChanges();
+            }
         }
     }
 
@@ -103,17 +116,17 @@ public class GUIPcbFrame extends GuiContainer {
             chkbxAND.setIsChecked(true);
             chkbxOR.setIsChecked(false);
             chkbxXOR.setIsChecked(false);
-            Util.LOGGER.info("AND");
+            this.compare = "AND";
         } else if (chkbxOR.mousePressed(mc, x, y)) {
             chkbxAND.setIsChecked(false);
             chkbxOR.setIsChecked(true);
             chkbxXOR.setIsChecked(false);
-            Util.LOGGER.info("OR");
+            this.compare = "OR";
         } else if (chkbxXOR.mousePressed(mc, x, y)) {
             chkbxAND.setIsChecked(false);
             chkbxOR.setIsChecked(false);
             chkbxXOR.setIsChecked(true);
-            Util.LOGGER.info("XOR");
+            this.compare = "XOR";
         }
 
         txtRcChannelOut.mouseClicked(x, y, button);
@@ -122,7 +135,33 @@ public class GUIPcbFrame extends GuiContainer {
     @Override
     public void onGuiClosed() {
         super.onGuiClosed();
+        this.passChanges();
+    }
 
+    public void passChanges() {
+        channelIn = txtRcChannelIn.getText();
+        tilePcbFrame.channelIn = this.channelIn;
+        channelOut = txtRcChannelOut.getText();
+        tilePcbFrame.channelOut = this.channelOut;
+        tilePcbFrame.compare = this.compare;
+
+        rsIn[0] = chkbxDownIn.isChecked();
+        rsIn[1] = chkbxUpIn.isChecked();
+        rsIn[2] = chkbxNorthIn.isChecked();
+        rsIn[3] = chkbxSouthIn.isChecked();
+        rsIn[4] = chkbxWestIn.isChecked();
+        rsIn[5] = chkbxEastIn.isChecked();
+
+        tilePcbFrame.rsIn = this.rsIn;
+
+        rsOut[0] = chkbxDownOut.isChecked();
+        rsOut[1] = chkbxUpOut.isChecked();
+        rsOut[2] = chkbxNorthOut.isChecked();
+        rsOut[3] = chkbxSouthOut.isChecked();
+        rsOut[4] = chkbxWestOut.isChecked();
+        rsOut[5] = chkbxEastOut.isChecked();
+
+        tilePcbFrame.rsOut = this.rsOut;
     }
 
     @Override
