@@ -1,12 +1,15 @@
 package theultimatehose.electricalengineering.network.sync;
 
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import theultimatehose.electricalengineering.Util;
+import theultimatehose.electricalengineering.network.PacketHandler;
 
 public class PcbFrameDataStackPacket implements IMessage {
 
@@ -16,6 +19,9 @@ public class PcbFrameDataStackPacket implements IMessage {
     private String channelIn, channelOut;
     private String compare;
     private boolean[] rsIn, rsOut;
+
+    @SuppressWarnings("unused")
+    public PcbFrameDataStackPacket() {}
 
     public PcbFrameDataStackPacket(int x, int y, int z, World world, String channelIn, String channelOut, String compare, boolean[] rsIn, boolean[] rsOut) {
         this.xCoord = x;
@@ -28,6 +34,10 @@ public class PcbFrameDataStackPacket implements IMessage {
         this.compare = compare;
         this.rsIn = rsIn;
         this.rsOut = rsOut;
+    }
+
+    public static void sendUpdate(PcbFrameDataStackPacket packet) {
+        PacketHandler.theNetwork.sendToAllAround(packet, new NetworkRegistry.TargetPoint(packet.worldID, packet.xCoord, packet.yCoord, packet.zCoord, 128));
     }
 
     @Override
@@ -56,9 +66,11 @@ public class PcbFrameDataStackPacket implements IMessage {
         else if (cmp == 2)
             this.compare = "XOR";
 
+        rsIn = new boolean[6];
         for (int i = 0; i < 6; i++) {
             rsIn[i] = buf.readBoolean();
         }
+        rsOut = new boolean[6];
         for (int i = 0; i < 6; i++) {
             rsOut[i] = buf.readBoolean();
         }
@@ -99,10 +111,12 @@ public class PcbFrameDataStackPacket implements IMessage {
 
         @Override
         public IMessage onMessage(PcbFrameDataStackPacket message, MessageContext ctx) {
+            Util.LOGGER.info("Processing package");
             World world = FMLClientHandler.instance().getClient().theWorld;
             TileEntity tile = world.getTileEntity(message.xCoord, message.yCoord, message.zCoord);
             if (tile instanceof IPcbFrameDataStackReciever) {
                 ((IPcbFrameDataStackReciever)tile).onStackRecieved(message.channelIn, message.channelOut, message.compare, message.rsIn, message.rsOut);
+                Util.LOGGER.info("Packet succesfully delivered to TE at " + message.xCoord + ", " + message.yCoord + ", " + message.zCoord);
             }
             return null;
         }

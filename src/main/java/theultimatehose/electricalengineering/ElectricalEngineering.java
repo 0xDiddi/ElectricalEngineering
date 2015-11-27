@@ -38,7 +38,7 @@ public class ElectricalEngineering {
     @Instance(Util.MOD_ID)
     public static ElectricalEngineering instance;
 
-    @SidedProxy(clientSide = "ClientProxy", serverSide = "CommonProxy")
+    @SidedProxy(clientSide = "theultimatehose.electricalengineering.proxy.ClientProxy", serverSide = "theultimatehose.electricalengineering.proxy.CommonProxy")
     public static CommonProxy proxy;
 
     CfgHandler cfgHandler;

@@ -3,6 +3,7 @@ package theultimatehose.electricalengineering.gui;
 import cpw.mods.fml.client.config.GuiCheckBox;
 import theultimatehose.electricalengineering.Util;
 import theultimatehose.electricalengineering.container.ContainerPcbFrame;
+import theultimatehose.electricalengineering.network.sync.PcbFrameDataStackPacket;
 import theultimatehose.electricalengineering.tile.TileEntityPcbFrame;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -162,6 +163,10 @@ public class GUIPcbFrame extends GuiContainer {
         rsOut[5] = chkbxEastOut.isChecked();
 
         tilePcbFrame.rsOut = this.rsOut;
+
+        PcbFrameDataStackPacket packet = new PcbFrameDataStackPacket(tilePcbFrame.xCoord, tilePcbFrame.yCoord, tilePcbFrame.zCoord, tilePcbFrame.getWorldObj(),
+                this.channelIn, this.channelOut, this.compare, this.rsIn, this.rsOut);
+        PcbFrameDataStackPacket.sendUpdate(packet);
     }
 
     @Override
