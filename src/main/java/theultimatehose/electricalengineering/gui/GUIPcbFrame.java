@@ -1,17 +1,16 @@
 package theultimatehose.electricalengineering.gui;
 
 import cpw.mods.fml.client.config.GuiCheckBox;
-import theultimatehose.electricalengineering.Util;
-import theultimatehose.electricalengineering.container.ContainerPcbFrame;
-import theultimatehose.electricalengineering.network.PacketHandler;
-import theultimatehose.electricalengineering.network.sync.PcbFrameDataStackPacket;
-import theultimatehose.electricalengineering.tile.TileEntityPcbFrame;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
+import theultimatehose.electricalengineering.Util;
+import theultimatehose.electricalengineering.container.ContainerPcbFrame;
+import theultimatehose.electricalengineering.network.sync.PcbFrameDataStackPacket;
+import theultimatehose.electricalengineering.tile.TileEntityPcbFrame;
 
 public class GUIPcbFrame extends GuiContainer {
 
@@ -167,7 +166,7 @@ public class GUIPcbFrame extends GuiContainer {
 
         PcbFrameDataStackPacket packet = new PcbFrameDataStackPacket(tilePcbFrame.xCoord, tilePcbFrame.yCoord, tilePcbFrame.zCoord, tilePcbFrame.getWorldObj(),
                 this.channelIn, this.channelOut, this.compare, this.rsIn, this.rsOut);
-        PacketHandler.theNetwork.sendToServer(packet);
+        PcbFrameDataStackPacket.sendUpdate(packet);
     }
 
     @Override

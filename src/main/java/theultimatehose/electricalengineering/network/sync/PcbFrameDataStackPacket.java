@@ -1,13 +1,12 @@
 package theultimatehose.electricalengineering.network.sync;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import theultimatehose.electricalengineering.Util;
+import net.minecraftforge.common.DimensionManager;
 import theultimatehose.electricalengineering.network.PacketHandler;
 
 public class PcbFrameDataStackPacket implements IMessage {
@@ -49,12 +48,16 @@ public class PcbFrameDataStackPacket implements IMessage {
         this.channelIn = "";
         int textlength = buf.readInt();
         for (int i = 0; i < textlength; i++) {
-            this.channelIn += buf.readChar();
+            char c = buf.readChar();
+            if (((int)c) != 0)
+                this.channelIn += c;
         }
         this.channelOut = "";
         textlength = buf.readInt();
         for (int i = 0; i < textlength; i++) {
-            this.channelOut += buf.readChar();
+            char c = buf.readChar();
+            if (((int)c) != 0)
+                this.channelOut += c;
         }
 
         int cmp = buf.readInt();
@@ -84,11 +87,13 @@ public class PcbFrameDataStackPacket implements IMessage {
 
         buf.writeInt(channelIn.length());
         for (int i = 0; i < channelIn.length(); i++) {
-            buf.writeChar(channelIn.charAt(i));
+            if (((int)channelIn.charAt(i)) != 0)
+                buf.writeChar(channelIn.charAt(i));
         }
         buf.writeInt(channelOut.length());
         for (int i = 0; i < channelOut.length(); i++) {
-            buf.writeChar(channelOut.charAt(i));
+            if (((int)channelOut.charAt(i)) != 0)
+                buf.writeChar(channelOut.charAt(i));
         }
 
         if (compare.equals("AND"))
@@ -110,11 +115,10 @@ public class PcbFrameDataStackPacket implements IMessage {
 
         @Override
         public IMessage onMessage(PcbFrameDataStackPacket message, MessageContext ctx) {
-            World world = FMLClientHandler.instance().getClient().theWorld;
+            World world = DimensionManager.getWorld(message.worldID);
             TileEntity tile = world.getTileEntity(message.xCoord, message.yCoord, message.zCoord);
             if (tile instanceof IPcbFrameDataStackReciever) {
                 ((IPcbFrameDataStackReciever)tile).onStackReceived(message.channelIn, message.channelOut, message.compare, message.rsIn, message.rsOut);
-                Util.LOGGER.info("Packet successfully delivered to TE at " + message.xCoord + ", " + message.yCoord + ", " + message.zCoord);
             }
             return null;
         }

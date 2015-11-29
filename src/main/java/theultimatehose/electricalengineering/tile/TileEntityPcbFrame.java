@@ -2,14 +2,14 @@ package theultimatehose.electricalengineering.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import theultimatehose.electricalengineering.Util;
-import theultimatehose.electricalengineering.network.sync.IPacketSyncerToClient;
-import theultimatehose.electricalengineering.network.sync.IPcbFrameDataStackReciever;
-import theultimatehose.electricalengineering.network.sync.PacketSyncerToClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
+import theultimatehose.electricalengineering.Util;
+import theultimatehose.electricalengineering.network.sync.IPacketSyncerToClient;
+import theultimatehose.electricalengineering.network.sync.IPcbFrameDataStackReciever;
+import theultimatehose.electricalengineering.network.sync.PacketSyncerToClient;
 
 public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient, IPcbFrameDataStackReciever {
 
@@ -62,14 +62,6 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
             if (flag)
                 this.markDirty();
 
-        }
-    }
-
-    @Override
-    public void closeInventory() {
-        super.closeInventory();
-        if (worldObj.isRemote) {
-            Util.LOGGER.info("channel in: " + channelIn);
         }
     }
 
@@ -167,8 +159,7 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
 
     @Override
     public int[] getValues() {
-        int[] ia = new int[48];
-        Util.LOGGER.warn("Syncing to client: " + channelIn);
+        int[] ia = new int[50];
         ia[0] = isPowerModuleInstalled ? 1 : 0;
         ia[1] = isControlModuleInstalled ? 1 : 0;
         ia[2] = isRedstoneModuleInstalled ? 1 : 0;
@@ -182,30 +173,35 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
             ia[i+11] = rsOut[i] ? 1 : 0;
         }
 
+        ia[17] = channelIn.length();
         char[] c = channelIn.toCharArray();
         for (int i = 0; i < 15; i++) {
             if (!(i >= c.length))
-                ia[i+17] = c[i];
+                ia[i+18] = c[i];
+            else
+                ia[i+18] = 0;
         }
+        ia[33] = channelOut.length();
         char[] d = channelOut.toCharArray();
         for (int i = 0; i < 15; i++) {
             if (!(i >= d.length))
-                ia[i+32] = d[i];
+                ia[i+34] = d[i];
+            else
+                ia[i+34] = 0;
         }
 
         if (compare.equals("AND"))
-            ia[47] = 0;
+            ia[49] = 0;
         else if (compare.equals("OR"))
-            ia[47] = 1;
+            ia[49] = 1;
         else if (compare.equals("XOR"))
-            ia[47] = 2;
+            ia[49] = 2;
 
         return ia;
     }
 
     @Override
     public void setValues(int[] values) {
-        Util.LOGGER.warn("Recieved from Server: " + channelIn);
         isPowerModuleInstalled = values[0] == 1;
         isControlModuleInstalled = values[1] == 1;
         isRedstoneModuleInstalled = values[2] == 1;
@@ -218,23 +214,26 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
         for (int i = 0; i < 6; i++) {
             rsOut[i] = values[i+11] == 1;
         }
-        char[] c = new char[15];
+
+        char[] c = new char[values[17]];
         for (int i = 0; i < 15; i++) {
-            c[i] = (char) values[i+32];
+            if (values[i+18] != 0)
+                c[i] = (char) values[i+18];
         }
         channelIn = String.valueOf(c);
 
-        c = new char[15];
+        c = new char[values[33]];
         for (int i = 0; i < 15; i++) {
-            c[i] = (char) values[i+32];
+            if (values[i+34] != 0)
+                c[i] = (char) values[i+34];
         }
         channelOut = String.valueOf(c);
 
-        if (values[47] == 0)
+        if (values[49] == 0)
             compare = "AND";
-        else if (values[47] == 1)
+        else if (values[49] == 1)
             compare = "OR";
-        else if (values[47] == 2)
+        else if (values[49] == 2)
             compare = "XOR";
     }
 
@@ -245,7 +244,6 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
 
     @Override
     public void onStackReceived(String channelIn, String channelOut, String compare, boolean[] rsIn, boolean[] rsOut) {
-        Util.LOGGER.warn("Received from client: " + channelIn);
         this.channelIn = channelIn;
         this.channelOut = channelOut;
         this.compare = compare;
