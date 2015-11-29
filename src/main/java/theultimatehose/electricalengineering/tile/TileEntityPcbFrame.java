@@ -137,29 +137,35 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
         return "Pcb Frame";
     }
 
+    public int getEnergyToScale(int i) {
+        return storage.getEnergyStored() * i / storage.getMaxEnergyStored();
+    }
+
     @Override
     public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
+        if (from ==ForgeDirection.DOWN && this.isPowerModuleInstalled)
+            return storage.receiveEnergy(maxReceive, simulate);
         return 0;
     }
 
     @Override
     public int getEnergyStored(ForgeDirection from) {
-        return 0;
+        return storage.getEnergyStored();
     }
 
     @Override
     public int getMaxEnergyStored(ForgeDirection from) {
-        return 0;
+        return storage.getMaxEnergyStored();
     }
 
     @Override
     public boolean canConnectEnergy(ForgeDirection from) {
-        return from == ForgeDirection.DOWN;
+        return from == ForgeDirection.DOWN && this.isPowerModuleInstalled;
     }
 
     @Override
     public int[] getValues() {
-        int[] ia = new int[50];
+        int[] ia = new int[51];
         ia[0] = isPowerModuleInstalled ? 1 : 0;
         ia[1] = isControlModuleInstalled ? 1 : 0;
         ia[2] = isRedstoneModuleInstalled ? 1 : 0;
@@ -196,6 +202,8 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
             ia[49] = 1;
         else if (compare.equals("XOR"))
             ia[49] = 2;
+
+        ia[50] = storage.getEnergyStored();
 
         return ia;
     }
@@ -235,6 +243,8 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
             compare = "OR";
         else if (values[49] == 2)
             compare = "XOR";
+
+        storage.setEnergyStored(values[50]);
     }
 
     @Override
