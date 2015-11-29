@@ -34,16 +34,21 @@ public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEn
 
     @Override
     public void updateEntity() {
+        super.updateEntity();
+
         if (!this.worldObj.isRemote) {
+            boolean flag = false;
 
             if (storage.getEnergyStored() != lastEnergyStored || lastWindTime != currWindTime || lastCoilAmount != currCoilAmount) {
                 lastEnergyStored = storage.getEnergyStored();
                 lastWindTime = currWindTime;
                 lastCoilAmount = currCoilAmount;
                 this.sendUpdate();
+                flag = true;
             }
 
             if (this.storage.getEnergyStored() >= 10 && canWind()) {
+                flag = true;
                 ItemStack input = slots[SLOT_COIL_IN];
                 currWindTime++;
                 if (currWindTime == windTime) {
@@ -56,10 +61,12 @@ public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEn
                     slots[SLOT_COIL_IN] = null;
                 }
             } else if (slots[SLOT_COIL_IN] == null) {
+                flag = true;
                 currWindTime = 0;
             }
 
             if (slots[SLOT_WIRE_IN] != null) {
+                flag = true;
                 if (slots[SLOT_WIRE_IN].getItem() == ItemManager.wireCopper && currCoilAmount + 1 <= coilAmount) {
                     currCoilAmount++;
                     slots[SLOT_WIRE_IN].stackSize--;
@@ -69,11 +76,15 @@ public class TileEntityCoilWinder extends TileEntityInventoryBase implements IEn
                 }
             }
 
+            if (flag)
+                this.markDirty();
+
         }
     }
 
-    public boolean canWind() {
 
+
+    public boolean canWind() {
         if (slots[SLOT_COIL_IN] != null) {
             if (slots[SLOT_COIL_IN].getItem() == ItemManager.coil && currCoilAmount > 0) {
                 if (slots[SLOT_COIL_OUT] == null) {

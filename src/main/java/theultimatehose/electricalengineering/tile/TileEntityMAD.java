@@ -56,8 +56,10 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
     @Override
     public void updateEntity() {
         if (!this.worldObj.isRemote) {
+            boolean flag = false;
 
             if (storage.getEnergyStored() >= 20 && canSort()) {
+                flag = true;
                 currSortTime++;
                 storage.extractEnergy(20, false);
                 if (currSortTime == sortTime) {
@@ -66,10 +68,12 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
                     this.markDirty();
                 }
             } else if (slots[SLOT_SCRAB_IN] == null) {
+                flag = true;
                 currSortTime = 0;
             }
 
             if (storage.getEnergyStored() >= 100 && canEtch() && currAcidAmount > 0) {
+                flag = true;
                 currEtchTime++;
                 storage.extractEnergy(100, false);
                 currAcidAmount -= 1;
@@ -79,10 +83,12 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
                     this.markDirty();
                 }
             } else if (slots[SLOT_CB_IN] == null) {
+                flag = true;
                 currEtchTime = 0;
             }
 
             if (slots[SLOT_ACID_IN] != null) {
+                flag = true;
                 if (slots[SLOT_ACID_IN].getItem() == ItemManager.bucketAcid && currAcidAmount + 1000 <= acidAmount) {
                     currAcidAmount += 1000;
                     slots[SLOT_ACID_IN] = null;
@@ -100,7 +106,11 @@ public class TileEntityMAD extends TileEntityInventoryBase implements IEnergyRec
                 lastEtchTime = currEtchTime;
                 lastAcidAmount = currAcidAmount;
                 this.sendUpdate();
+                flag = true;
             }
+
+            if (flag)
+                this.markDirty();
 
         }
     }

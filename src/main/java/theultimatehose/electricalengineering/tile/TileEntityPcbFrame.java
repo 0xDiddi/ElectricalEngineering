@@ -22,9 +22,9 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
     private boolean isRemoteModuleInstalled, lastRcInstalled;
     private int lastMeta;
 
-    public String channelIn, channelOut;
-    public String compare;
-    public boolean[] rsIn = new boolean[6], rsOut = new boolean[6];
+    public String channelIn, lastChannelIn, channelOut, lastchannelOut;
+    public String compare, lastCompare;
+    public boolean[] rsIn = new boolean[6], lastRsIn = new boolean[6], rsOut = new boolean[6], lastRsOut = new boolean[6];
 
     public TileEntityPcbFrame() {
         slots = new ItemStack[0];
@@ -41,14 +41,27 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
     @Override
     public void updateEntity() {
         if (!worldObj.isRemote) {
-            if (isPowerModuleInstalled != lastPwrInstalled || isControlModuleInstalled != lastCtrlInstalled || isRedstoneModuleInstalled != lastRsInstalled || isRemoteModuleInstalled != lastRcInstalled || lastMeta != blockMetadata) {
+            boolean flag = false;
+
+            if (isPowerModuleInstalled != lastPwrInstalled || isControlModuleInstalled != lastCtrlInstalled || isRedstoneModuleInstalled != lastRsInstalled || isRemoteModuleInstalled != lastRcInstalled || lastMeta != blockMetadata ||
+                    !channelIn.equals(lastChannelIn) || !channelOut.equals(lastchannelOut) || !compare.equals(lastCompare) || rsIn != lastRsIn || rsOut != lastRsOut) {
                 lastPwrInstalled = isPowerModuleInstalled;
                 lastCtrlInstalled = isControlModuleInstalled;
                 lastRsInstalled = isRedstoneModuleInstalled;
                 lastRcInstalled = isRemoteModuleInstalled;
                 lastMeta = blockMetadata;
+                lastChannelIn = channelIn;
+                lastchannelOut = channelOut;
+                lastCompare = compare;
+                lastRsIn = rsIn;
+                lastRsOut = rsOut;
                 sendUpdate();
+                flag = true;
             }
+
+            if (flag)
+                this.markDirty();
+
         }
     }
 
@@ -123,24 +136,6 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
     }
 
     @Override
-    public void writeSyncDataToNBT(NBTTagCompound compound) {
-        compound.setString("CH_IN", channelIn);
-        compound.setString("CH_OUT", channelOut);
-        compound.setString("CMP", compare);
-        compound.setIntArray("RS_IN", Util.baToIa(rsIn));
-        compound.setIntArray("RS_OUT", Util.baToIa(rsOut));
-    }
-
-    @Override
-    public void readSyncDataFromNBT(NBTTagCompound compound) {
-        channelIn = compound.getString("CH_IN");
-        channelOut = compound.getString("CH_OUT");
-        compare = compound.getString("CMP");
-        rsIn = Util.iaToBa(compound.getIntArray("RS_IN"));
-        rsOut = Util.iaToBa(compound.getIntArray("RS_OUT"));
-    }
-
-    @Override
     public boolean isUseableByPlayer(EntityPlayer player) {
         return player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64;
     }
@@ -173,6 +168,7 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
     @Override
     public int[] getValues() {
         int[] ia = new int[48];
+        Util.LOGGER.warn("Syncing to client: " + channelIn);
         ia[0] = isPowerModuleInstalled ? 1 : 0;
         ia[1] = isControlModuleInstalled ? 1 : 0;
         ia[2] = isRedstoneModuleInstalled ? 1 : 0;
@@ -209,6 +205,7 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
 
     @Override
     public void setValues(int[] values) {
+        Util.LOGGER.warn("Recieved from Server: " + channelIn);
         isPowerModuleInstalled = values[0] == 1;
         isControlModuleInstalled = values[1] == 1;
         isRedstoneModuleInstalled = values[2] == 1;
@@ -247,7 +244,8 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
     }
 
     @Override
-    public void onStackRecieved(String channelIn, String channelOut, String compare, boolean[] rsIn, boolean[] rsOut) {
+    public void onStackReceived(String channelIn, String channelOut, String compare, boolean[] rsIn, boolean[] rsOut) {
+        Util.LOGGER.warn("Received from client: " + channelIn);
         this.channelIn = channelIn;
         this.channelOut = channelOut;
         this.compare = compare;

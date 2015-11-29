@@ -28,7 +28,9 @@ public class PacketSyncerToClient implements IMessage {
     private int y;
     private int z;
     private int[] values;
-    
+
+    public PacketSyncerToClient() {}
+
     public PacketSyncerToClient(TileEntity tile, int[] values) {
         this.x = tile.xCoord;
         this.y = tile.yCoord;
@@ -38,7 +40,7 @@ public class PacketSyncerToClient implements IMessage {
 
     public static void sendPacket(TileEntity tile) {
         if (tile instanceof IPacketSyncerToClient) {
-            PacketHandler.theNetwork.sendToAllAround(new PacketSyncerToClient(tile, ((IPacketSyncerToClient) tile).getValues()), new NetworkRegistry.TargetPoint(tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 128));
+            PacketHandler.theNetwork.sendToAllAround(new PacketSyncerToClient(tile, ((IPacketSyncerToClient) tile).getValues()), new NetworkRegistry.TargetPoint(tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 256));
         }
     }
 

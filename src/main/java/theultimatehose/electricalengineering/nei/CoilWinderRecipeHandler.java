@@ -71,7 +71,7 @@ public class CoilWinderRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return "ItemManager:textures/gui/guiCoilWinder.png";
+        return Util.MOD_ID_LOWER +  ":textures/gui/guiCoilWinder.png";
     }
 
     public String getName() {

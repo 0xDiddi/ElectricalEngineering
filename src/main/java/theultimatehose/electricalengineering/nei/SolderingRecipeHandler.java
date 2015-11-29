@@ -61,7 +61,7 @@ public class SolderingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return "electricalengineering:textures/gui/guiSolderingTable.png";
+        return Util.MOD_ID_LOWER + ":textures/gui/guiSolderingTable.png";
     }
 
     @Override

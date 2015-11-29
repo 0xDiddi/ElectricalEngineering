@@ -47,15 +47,18 @@ public class TileEntitySolder extends TileEntityInventoryBase implements IEnergy
     @Override
     public void updateEntity() {
         if (!this.worldObj.isRemote) {
+            boolean flag = false;
 
             if (storage.getEnergyStored() != lastEnergyStored || lastDesolderTime != currDesolderTime || lastSolderTime != currSolderTime) {
                 lastEnergyStored = storage.getEnergyStored();
                 lastDesolderTime = currDesolderTime;
                 lastSolderTime = currSolderTime;
                 this.sendUpdate();
+                flag = true;
             }
 
             if (storage.getEnergyStored() >= 100 && canDesolder()) {
+                flag = true;
                 currDesolderTime++;
                 storage.extractEnergy(100, false);
                 if (currDesolderTime == desolderTime) {
@@ -64,10 +67,12 @@ public class TileEntitySolder extends TileEntityInventoryBase implements IEnergy
                     this.markDirty();
                 }
             } else if (slots[SLOT_PCB_IN] == null) {
+                flag = true;
                 currDesolderTime = 0;
             }
 
             if (storage.getEnergyStored() >= 100 && isSoldering && canSolder()) {
+                flag = true;
                 currSolderTime++;
                 storage.extractEnergy(100, false);
                 if (currSolderTime == solderTime) {
@@ -76,8 +81,13 @@ public class TileEntitySolder extends TileEntityInventoryBase implements IEnergy
                     this.markDirty();
                 }
             } else if (!isSoldering) {
+                flag = true;
                 currSolderTime = 0;
             }
+
+            if (flag)
+                this.markDirty();
+
         }
     }
 

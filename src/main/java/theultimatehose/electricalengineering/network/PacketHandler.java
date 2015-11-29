@@ -25,6 +25,6 @@ public class PacketHandler {
         theNetwork = NetworkRegistry.INSTANCE.newSimpleChannel(Util.MOD_ID_LOWER);
 
         theNetwork.registerMessage(PacketSyncerToClient.Handler.class, PacketSyncerToClient.class, 0, Side.CLIENT);
-        theNetwork.registerMessage(PcbFrameDataStackPacket.Handler.class, PcbFrameDataStackPacket.class, 1, Side.CLIENT);
+        theNetwork.registerMessage(PcbFrameDataStackPacket.Handler.class, PcbFrameDataStackPacket.class, 1, Side.SERVER);
     }
 }

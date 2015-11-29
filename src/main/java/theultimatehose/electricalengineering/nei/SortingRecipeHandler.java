@@ -79,7 +79,7 @@ public class SortingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return "electricalengineering:textures/gui/guiMAD.png";
+        return Util.MOD_ID_LOWER + ":textures/gui/guiMAD.png";
     }
 
     @Override

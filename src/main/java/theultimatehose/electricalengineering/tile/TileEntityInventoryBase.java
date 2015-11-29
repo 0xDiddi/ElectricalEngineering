@@ -15,23 +15,20 @@ public class TileEntityInventoryBase extends TileEntity implements IInventory {
     public ItemStack slots[] = new ItemStack[0];
 
     @Override
+    public void updateEntity() {
+        this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+    }
+
+    @Override
     public Packet getDescriptionPacket() {
         NBTTagCompound tag = new NBTTagCompound();
-        this.writeSyncDataToNBT(tag);
+        this.writeToNBT(tag);
         return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 3, tag);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-        this.readSyncDataFromNBT(pkt.func_148857_g());
-    }
-
-    public void writeSyncDataToNBT(NBTTagCompound compound) {
-
-    }
-
-    public void readSyncDataFromNBT(NBTTagCompound compound) {
-
+        this.readFromNBT(pkt.func_148857_g());
     }
 
     @Override

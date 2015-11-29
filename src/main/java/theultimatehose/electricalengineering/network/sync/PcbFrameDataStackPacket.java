@@ -1,7 +1,6 @@
 package theultimatehose.electricalengineering.network.sync;
 
 import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -37,7 +36,7 @@ public class PcbFrameDataStackPacket implements IMessage {
     }
 
     public static void sendUpdate(PcbFrameDataStackPacket packet) {
-        PacketHandler.theNetwork.sendToAllAround(packet, new NetworkRegistry.TargetPoint(packet.worldID, packet.xCoord, packet.yCoord, packet.zCoord, 128));
+        PacketHandler.theNetwork.sendToServer(packet);
     }
 
     @Override
@@ -111,12 +110,11 @@ public class PcbFrameDataStackPacket implements IMessage {
 
         @Override
         public IMessage onMessage(PcbFrameDataStackPacket message, MessageContext ctx) {
-            Util.LOGGER.info("Processing package");
             World world = FMLClientHandler.instance().getClient().theWorld;
             TileEntity tile = world.getTileEntity(message.xCoord, message.yCoord, message.zCoord);
             if (tile instanceof IPcbFrameDataStackReciever) {
-                ((IPcbFrameDataStackReciever)tile).onStackRecieved(message.channelIn, message.channelOut, message.compare, message.rsIn, message.rsOut);
-                Util.LOGGER.info("Packet succesfully delivered to TE at " + message.xCoord + ", " + message.yCoord + ", " + message.zCoord);
+                ((IPcbFrameDataStackReciever)tile).onStackReceived(message.channelIn, message.channelOut, message.compare, message.rsIn, message.rsOut);
+                Util.LOGGER.info("Packet successfully delivered to TE at " + message.xCoord + ", " + message.yCoord + ", " + message.zCoord);
             }
             return null;
         }
