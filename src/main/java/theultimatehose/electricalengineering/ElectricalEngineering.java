@@ -11,7 +11,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import theultimatehose.electricalengineering.block.BlockManager;
-import theultimatehose.electricalengineering.config.CfgHandler;
+import theultimatehose.electricalengineering.data.config.CfgHandler;
 import theultimatehose.electricalengineering.entity.EntityBolt;
 import theultimatehose.electricalengineering.event.CraftEvent;
 import theultimatehose.electricalengineering.event.WorldDecorationEvent;

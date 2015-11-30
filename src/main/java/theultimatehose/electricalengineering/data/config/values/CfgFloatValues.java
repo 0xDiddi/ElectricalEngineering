@@ -8,9 +8,9 @@
  * � 2015 Ellpeck
  */
 
-package theultimatehose.electricalengineering.config.values;
+package theultimatehose.electricalengineering.data.config.values;
 
-import theultimatehose.electricalengineering.config.CfgCat;
+import theultimatehose.electricalengineering.data.config.CfgCat;
 
 public enum CfgFloatValues {
 

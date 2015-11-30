@@ -8,9 +8,9 @@
  * � 2015 Ellpeck
  */
 
-package theultimatehose.electricalengineering.config;
+package theultimatehose.electricalengineering.data.config;
 
-import theultimatehose.electricalengineering.config.values.CfgFloatValues;
+import theultimatehose.electricalengineering.data.config.values.CfgFloatValues;
 import net.minecraftforge.common.config.Configuration;
 
 public class CfgValues {

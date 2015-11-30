@@ -8,7 +8,7 @@
  * � 2015 Ellpeck
  */
 
-package theultimatehose.electricalengineering.config;
+package theultimatehose.electricalengineering.data.config;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;

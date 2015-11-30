@@ -3,7 +3,7 @@ package theultimatehose.electricalengineering.item;
 import cofh.api.energy.ItemEnergyContainer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import theultimatehose.electricalengineering.config.values.CfgFloatValues;
+import theultimatehose.electricalengineering.data.config.values.CfgFloatValues;
 import theultimatehose.electricalengineering.entity.EntityBolt;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.creativetab.CreativeTabs;

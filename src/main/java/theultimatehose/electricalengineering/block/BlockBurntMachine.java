@@ -1,6 +1,6 @@
 package theultimatehose.electricalengineering.block;
 
-import theultimatehose.electricalengineering.config.values.CfgFloatValues;
+import theultimatehose.electricalengineering.data.config.values.CfgFloatValues;
 import theultimatehose.electricalengineering.item.ItemManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

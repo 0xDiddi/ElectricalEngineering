@@ -3,7 +3,7 @@ package theultimatehose.electricalengineering.event;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import theultimatehose.electricalengineering.block.BlockManager;
-import theultimatehose.electricalengineering.config.values.CfgFloatValues;
+import theultimatehose.electricalengineering.data.config.values.CfgFloatValues;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 public class WorldDecorationEvent {

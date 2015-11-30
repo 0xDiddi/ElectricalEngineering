@@ -2,11 +2,16 @@ package theultimatehose.electricalengineering.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockRedstoneRepeater;
+import net.minecraft.block.BlockRedstoneTorch;
+import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import theultimatehose.electricalengineering.Util;
+import theultimatehose.electricalengineering.block.BlockPcbFrame;
 import theultimatehose.electricalengineering.network.sync.IPacketSyncerToClient;
 import theultimatehose.electricalengineering.network.sync.IPcbFrameDataStackReciever;
 import theultimatehose.electricalengineering.network.sync.PacketSyncerToClient;
@@ -59,10 +64,48 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
                 flag = true;
             }
 
+            boolean outputSignal = false;
+            for (int i = 0; i < 6; i++) {
+                if (rsIn[i] && isSidePowered(ForgeDirection.getOrientation(i))) {
+                    outputSignal = true;
+                }
+            }
+
+            if (outputSignal) {
+                for (int i = 0; i < 6; i++) {
+                    if (rsOut[i]) {
+                        setSidePowered(ForgeDirection.getOrientation(i));
+                    }
+                }
+            }
+
+            BlockPcbFrame block = (BlockPcbFrame) worldObj.getBlock(xCoord, yCoord, zCoord);
+
             if (flag)
                 this.markDirty();
 
         }
+    }
+
+    public boolean isSidePowered(ForgeDirection side) {
+        Block block = worldObj.getBlock(xCoord + side.offsetX, yCoord + side.offsetY, zCoord + side.offsetZ);
+
+        if (block instanceof BlockRedstoneWire) {
+            int i = worldObj.getBlockMetadata(xCoord + side.offsetX, yCoord + side.offsetY, zCoord + side.offsetZ);
+            if (i > 0)
+                return true;
+        }
+        return false;
+    }
+
+    public void setSidePowered(ForgeDirection side) {
+        Block block = worldObj.getBlock(xCoord + side.offsetX, yCoord + side.offsetY, zCoord + side.offsetZ);
+
+        if (block instanceof BlockRedstoneWire) {
+            worldObj.setBlockMetadataWithNotify(xCoord + side.offsetX, yCoord + side.offsetY, zCoord + side.offsetZ, 15, 3);
+            worldObj.notifyBlockOfNeighborChange(xCoord + side.offsetX*2, yCoord + side.offsetY*2, zCoord + side.offsetZ*2, block);
+        }
+
     }
 
     public void setIsPowerModuleInstalled(boolean isPowerModuleInstalled) {

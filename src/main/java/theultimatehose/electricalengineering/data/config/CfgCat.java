@@ -8,7 +8,7 @@
  * � 2015 Ellpeck
  */
 
-package theultimatehose.electricalengineering.config;
+package theultimatehose.electricalengineering.data.config;
 
 public enum CfgCat {
 
