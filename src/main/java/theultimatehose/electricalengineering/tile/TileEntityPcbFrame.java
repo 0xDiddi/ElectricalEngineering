@@ -3,15 +3,13 @@ package theultimatehose.electricalengineering.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRedstoneRepeater;
-import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import theultimatehose.electricalengineering.Util;
-import theultimatehose.electricalengineering.block.BlockPcbFrame;
+import theultimatehose.electricalengineering.data.worlddata.RemoteNetworkManager;
 import theultimatehose.electricalengineering.network.sync.IPacketSyncerToClient;
 import theultimatehose.electricalengineering.network.sync.IPcbFrameDataStackReciever;
 import theultimatehose.electricalengineering.network.sync.PacketSyncerToClient;
@@ -27,9 +25,10 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
     private boolean isRemoteModuleInstalled, lastRcInstalled;
     private int lastMeta;
 
-    public String channelIn, lastChannelIn, channelOut, lastchannelOut;
-    public String compare, lastCompare;
-    public boolean[] rsIn = new boolean[6], lastRsIn = new boolean[6], rsOut = new boolean[6], lastRsOut = new boolean[6];
+    private String channelIn, lastChannelIn, channelOut, lastchannelOut;
+    private String compare, lastCompare;
+    private boolean[] rsIn = new boolean[6], lastRsIn = new boolean[6], rsOut = new boolean[6], lastRsOut = new boolean[6];
+    private boolean doOutput;
 
     public TileEntityPcbFrame() {
         slots = new ItemStack[0];
@@ -40,6 +39,10 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
         compare = "AND";
         rsIn = new boolean[6];
         rsOut = new boolean[6];
+        doOutput = false;
+
+        /**Useless, for demonstration only. */
+        RemoteNetworkManager.registerRemoteTile(worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, "");
 
     }
 
@@ -47,6 +50,22 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
     public void updateEntity() {
         if (!worldObj.isRemote) {
             boolean flag = false;
+
+            for (int i = 0; i < 6; i++) {
+                if (rsIn[i] && isSidePowered(ForgeDirection.getOrientation(i))) {
+                    doOutput = true;
+                    flag = true;
+                }
+            }
+
+            if (doOutput && isRedstoneModuleInstalled) {
+                for (int i = 0; i < 6; i++) {
+                    if (rsOut[i]) {
+                        setSidePowered(ForgeDirection.getOrientation(i));
+                        flag = true;
+                    }
+                }
+            }
 
             if (isPowerModuleInstalled != lastPwrInstalled || isControlModuleInstalled != lastCtrlInstalled || isRedstoneModuleInstalled != lastRsInstalled || isRemoteModuleInstalled != lastRcInstalled || lastMeta != blockMetadata ||
                     !channelIn.equals(lastChannelIn) || !channelOut.equals(lastchannelOut) || !compare.equals(lastCompare) || rsIn != lastRsIn || rsOut != lastRsOut) {
@@ -63,23 +82,6 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
                 sendUpdate();
                 flag = true;
             }
-
-            boolean outputSignal = false;
-            for (int i = 0; i < 6; i++) {
-                if (rsIn[i] && isSidePowered(ForgeDirection.getOrientation(i))) {
-                    outputSignal = true;
-                }
-            }
-
-            if (outputSignal) {
-                for (int i = 0; i < 6; i++) {
-                    if (rsOut[i]) {
-                        setSidePowered(ForgeDirection.getOrientation(i));
-                    }
-                }
-            }
-
-            BlockPcbFrame block = (BlockPcbFrame) worldObj.getBlock(xCoord, yCoord, zCoord);
 
             if (flag)
                 this.markDirty();
@@ -103,9 +105,12 @@ public class TileEntityPcbFrame extends TileEntityInventoryBase implements IEner
 
         if (block instanceof BlockRedstoneWire) {
             worldObj.setBlockMetadataWithNotify(xCoord + side.offsetX, yCoord + side.offsetY, zCoord + side.offsetZ, 15, 3);
-            worldObj.notifyBlockOfNeighborChange(xCoord + side.offsetX*2, yCoord + side.offsetY*2, zCoord + side.offsetZ*2, block);
         }
 
+    }
+
+    public boolean isOutputtingRcSignal() {
+        return doOutput && isRemoteModuleInstalled;
     }
 
     public void setIsPowerModuleInstalled(boolean isPowerModuleInstalled) {
